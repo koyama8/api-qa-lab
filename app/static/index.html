@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pay Lab</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">QA</div>
+        <div>
+          <p class="eyebrow">Laboratório bancário</p>
+          <h1>QA Koyama</h1>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="resetButton" type="button">Resetar massa</button>
+        <a href="/docs" target="_blank" rel="noreferrer">Docs da API</a>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Ambiente de estudos</p>
+          <h2>Teste clientes, cartões, faturas e pagamentos em uma base previsível.</h2>
+          <p>
+            Use esta tela para visualizar os dados. Use o Bruno para testar os endpoints,
+            status code, body, headers e cenários negativos.
+          </p>
+        </div>
+        <div class="hero-metrics">
+          <div>
+            <strong id="clientesCount">0</strong>
+            <span>clientes</span>
+          </div>
+          <div>
+            <strong id="cartoesCount">0</strong>
+            <span>cartões</span>
+          </div>
+          <div>
+            <strong id="faturasCount">0</strong>
+            <span>faturas</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="status-panel">
+        <div>
+          <p class="label">Status da API</p>
+          <strong id="apiStatus">Verificando...</strong>
+        </div>
+        <div>
+          <p class="label">Base URL</p>
+          <strong>http://127.0.0.1:8000</strong>
+        </div>
+        <div>
+          <p class="label">Login de estudo</p>
+          <strong id="tokenStatus">Ainda não gerado</strong>
+        </div>
+      </section>
+
+      <section class="grid two-columns">
+        <form id="loginForm" class="panel">
+          <div class="panel-title">
+            <h2>Login</h2>
+            <span>Gera token fake</span>
+          </div>
+          <label>
+            Usuário
+            <input name="usuario" value="admin" autocomplete="username" />
+          </label>
+          <label>
+            Senha
+            <input name="senha" value="123456" type="password" autocomplete="current-password" />
+          </label>
+          <button type="submit">Gerar token fake</button>
+          <p id="loginMessage" class="message"></p>
+        </form>
+
+        <form id="clienteForm" class="panel">
+          <div class="panel-title">
+            <h2>Novo cliente</h2>
+            <span>Cadastra na massa atual</span>
+          </div>
+          <label>
+            Nome
+            <input name="nome" value="Cliente Pay Lab" />
+          </label>
+          <label>
+            E-mail
+            <input name="email" value="matheus@email.com" />
+          </label>
+          <label>
+            CPF
+            <input name="cpf" value="12345678900" />
+          </label>
+          <button type="submit">Criar cliente</button>
+          <p id="clienteMessage" class="message"></p>
+        </form>
+      </section>
+
+      <section class="grid three-columns">
+        <article class="panel">
+          <div class="panel-title">
+            <h2>Clientes</h2>
+            <span>Dados atuais</span>
+          </div>
+          <div id="clientesList" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-title">
+            <h2>Cartões</h2>
+            <span>Ações de status</span>
+          </div>
+          <div id="cartoesList" class="list"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-title">
+            <h2>Faturas</h2>
+            <span>Pagamentos</span>
+          </div>
+          <div id="faturasList" class="list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

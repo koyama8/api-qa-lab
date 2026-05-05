@@ -1,0 +1,82 @@
+{
+  "clientes": [
+    {
+      "id": 1,
+      "nome": "Cliente Pay Lab",
+      "email": "matheus@email.com",
+      "cpf": "12345678900",
+      "ativo": true
+    },
+    {
+      "id": 2,
+      "nome": "Ana Silva",
+      "email": "ana.silva@email.com",
+      "cpf": "98765432100",
+      "ativo": true
+    },
+    {
+      "id": 3,
+      "nome": "Carlos Souza",
+      "email": "carlos.souza@email.com",
+      "cpf": "45678912300",
+      "ativo": false
+    }
+  ],
+  "cartoes": [
+    {
+      "id": 1,
+      "cliente_id": 1,
+      "numero_masked": "**** **** **** 1234",
+      "limite": 5000.0,
+      "status": "ATIVO"
+    },
+    {
+      "id": 2,
+      "cliente_id": 1,
+      "numero_masked": "**** **** **** 9876",
+      "limite": 2500.0,
+      "status": "BLOQUEADO"
+    },
+    {
+      "id": 3,
+      "cliente_id": 2,
+      "numero_masked": "**** **** **** 5555",
+      "limite": 1000.0,
+      "status": "CANCELADO"
+    }
+  ],
+  "faturas": [
+    {
+      "id": 1,
+      "cliente_id": 1,
+      "cartao_id": 1,
+      "valor": 1200.5,
+      "status": "ABERTA",
+      "vencimento": "2026-06-10"
+    },
+    {
+      "id": 2,
+      "cliente_id": 1,
+      "cartao_id": 2,
+      "valor": 800.0,
+      "status": "FECHADA",
+      "vencimento": "2026-05-20"
+    },
+    {
+      "id": 3,
+      "cliente_id": 2,
+      "cartao_id": 3,
+      "valor": 300.0,
+      "status": "PAGA",
+      "vencimento": "2026-04-15"
+    }
+  ],
+  "pagamentos": [
+    {
+      "id": 1,
+      "fatura_id": 3,
+      "valor": 300.0,
+      "status": "APROVADO"
+    }
+  ]
+}
