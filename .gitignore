@@ -4,3 +4,10 @@ __pycache__/
 .env
 .pytest_cache/
 .vscode/
+/.metadata/
+target/
+bin/
+.classpath
+.project
+.settings/
+.sonarlint/
