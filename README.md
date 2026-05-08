@@ -70,7 +70,7 @@ Erro:
 }
 ```
 
-Observação: `DELETE /clientes/{id}` retorna `204 No Content`, seguindo a regra REST para exclusão bem-sucedida.
+Observação: `DELETE /clientes/{id}` e `DELETE /faturas/{id}` retornam `204 No Content`, seguindo a regra REST para exclusão bem-sucedida.
 
 ## Endpoints
 
@@ -91,6 +91,9 @@ Observação: `DELETE /clientes/{id}` retorna `204 No Content`, seguindo a regra
 | PUT | `/cartoes/{id}/cancelar` | Cancela cartão |
 | GET | `/faturas` | Lista faturas |
 | GET | `/faturas/{id}` | Busca fatura por ID |
+| POST | `/faturas` | Cria fatura |
+| PUT | `/faturas/{id}` | Atualiza fatura |
+| DELETE | `/faturas/{id}` | Remove fatura |
 | GET | `/clientes/{id}/faturas` | Lista faturas de um cliente |
 | POST | `/pagamentos` | Realiza pagamento de fatura |
 | POST | `/reset` | Restaura a massa inicial de dados |
@@ -151,6 +154,28 @@ Login válido retorna um token fake:
 }
 ```
 
+### POST /faturas
+
+```json
+{
+  "cliente_id": 1,
+  "cartao_id": 1,
+  "valor": 950.75,
+  "status": "ABERTA",
+  "vencimento": "2026-07-10"
+}
+```
+
+### PUT /faturas/{id}
+
+```json
+{
+  "valor": 999.99,
+  "status": "FECHADA",
+  "vencimento": "2026-07-20"
+}
+```
+
 ### POST /pagamentos
 
 ```json
@@ -196,6 +221,10 @@ Estados importantes para testes:
 - Cartão bloqueado pode ser desbloqueado.
 - Cartão cancelado não pode ser bloqueado nem desbloqueado.
 - Fatura inexistente retorna `404`.
+- Criar fatura válida retorna `201`.
+- Atualizar fatura válida retorna `200`.
+- Deletar fatura válida retorna `204`.
+- Fatura paga não pode ser deletada e retorna `409`.
 - Fatura já paga não pode ser paga novamente e retorna `409`.
 - Pagamento com valor diferente do valor da fatura retorna `400`.
 - Pagamento valido muda o status da fatura para `PAGA`.
