@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Query, Response
 
 from app.schemas.cliente import ClienteCreate, ClienteUpdate
 from app.services.storage import next_id, read_database, write_database
@@ -16,9 +16,28 @@ def _find_cliente(database: dict, cliente_id: int) -> dict | None:
 
 
 @router.get("")
-def listar_clientes():
+def listar_clientes(
+    ativo: bool | None = Query(default=None, description="Filtra clientes ativos ou inativos."),
+    nome: str | None = Query(default=None, description="Filtra clientes por parte do nome."),
+):
     database = read_database()
-    return success_response(data=database["clientes"])
+    clientes = database["clientes"]
+
+    if ativo is not None:
+        clientes = [cliente for cliente in clientes if cliente["ativo"] == ativo]
+
+    if nome:
+        nome_normalizado = nome.lower()
+        clientes = [
+            cliente
+            for cliente in clientes
+            if nome_normalizado in cliente["nome"].lower()
+        ]
+
+    return success_response(
+        data=clientes,
+        headers={"X-Total-Count": str(len(clientes))},
+    )
 
 
 @router.get("/{cliente_id}")

@@ -9,9 +9,11 @@ def success_response(
     data: Any = None,
     message: str = DEFAULT_SUCCESS_MESSAGE,
     status_code: int = 200,
+    headers: dict[str, str] | None = None,
 ) -> JSONResponse:
     return JSONResponse(
         status_code=status_code,
+        headers=headers,
         content={
             "success": True,
             "message": message,

@@ -50,8 +50,8 @@
       "id": 1,
       "cliente_id": 1,
       "cartao_id": 1,
-      "valor": 1200.5,
-      "status": "ABERTA",
+      "valor": 1350.45,
+      "status": "PAGA",
       "vencimento": "2026-06-10"
     },
     {
@@ -76,6 +76,12 @@
       "id": 1,
       "fatura_id": 3,
       "valor": 300.0,
+      "status": "APROVADO"
+    },
+    {
+      "id": 2,
+      "fatura_id": 1,
+      "valor": 1200.5,
       "status": "APROVADO"
     }
   ]

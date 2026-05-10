@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Query, Response
 
 from app.schemas.fatura import FaturaCreate, FaturaStatus, FaturaUpdate
 from app.services.storage import next_id, read_database, write_database
@@ -57,9 +57,29 @@ def _to_float(value: Decimal) -> float:
 
 
 @router.get("/faturas")
-def listar_faturas():
+def listar_faturas(
+    cliente_id: int | None = Query(default=None, gt=0, description="Filtra faturas pelo ID do cliente."),
+    cartao_id: int | None = Query(default=None, gt=0, description="Filtra faturas pelo ID do cartão."),
+    status: FaturaStatus | None = Query(default=None, description="Filtra faturas por status."),
+):
     database = read_database()
-    return success_response(data=database["faturas"])
+    faturas = database["faturas"]
+
+    if cliente_id is not None:
+        faturas = [
+            fatura for fatura in faturas if fatura["cliente_id"] == cliente_id
+        ]
+
+    if cartao_id is not None:
+        faturas = [fatura for fatura in faturas if fatura["cartao_id"] == cartao_id]
+
+    if status is not None:
+        faturas = [fatura for fatura in faturas if fatura["status"] == status.value]
+
+    return success_response(
+        data=faturas,
+        headers={"X-Total-Count": str(len(faturas))},
+    )
 
 
 @router.get("/faturas/{fatura_id}")

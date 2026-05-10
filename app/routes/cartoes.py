@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from app.schemas.cartao import CartaoCreate, CartaoStatus
 from app.services.storage import next_id, read_database, write_database
@@ -20,9 +20,25 @@ def _cliente_existe(database: dict, cliente_id: int) -> bool:
 
 
 @router.get("")
-def listar_cartoes():
+def listar_cartoes(
+    cliente_id: int | None = Query(default=None, gt=0, description="Filtra cartões pelo ID do cliente."),
+    status: CartaoStatus | None = Query(default=None, description="Filtra cartões por status."),
+):
     database = read_database()
-    return success_response(data=database["cartoes"])
+    cartoes = database["cartoes"]
+
+    if cliente_id is not None:
+        cartoes = [
+            cartao for cartao in cartoes if cartao["cliente_id"] == cliente_id
+        ]
+
+    if status is not None:
+        cartoes = [cartao for cartao in cartoes if cartao["status"] == status.value]
+
+    return success_response(
+        data=cartoes,
+        headers={"X-Total-Count": str(len(cartoes))},
+    )
 
 
 @router.get("/{cartao_id}")

@@ -77,19 +77,20 @@ Observação: `DELETE /clientes/{id}` e `DELETE /faturas/{id}` retornam `204 No 
 | Método | Rota | Descrição |
 | --- | --- | --- |
 | GET | `/health` | Verifica se a API está online |
+| GET | `/headers` | Endpoint de estudo para headers de requisição e resposta |
 | POST | `/login` | Realiza login com usuario e senha fixos |
-| GET | `/clientes` | Lista clientes |
+| GET | `/clientes` | Lista clientes e permite filtros por query params |
 | GET | `/clientes/{id}` | Busca cliente por ID |
 | POST | `/clientes` | Cria cliente |
 | PUT | `/clientes/{id}` | Atualiza cliente |
 | DELETE | `/clientes/{id}` | Remove cliente |
-| GET | `/cartoes` | Lista cartões |
+| GET | `/cartoes` | Lista cartões e permite filtros por query params |
 | GET | `/cartoes/{id}` | Busca cartão por ID |
 | POST | `/cartoes` | Cria cartão |
 | PUT | `/cartoes/{id}/bloquear` | Bloqueia cartão |
 | PUT | `/cartoes/{id}/desbloquear` | Desbloqueia cartão |
 | PUT | `/cartoes/{id}/cancelar` | Cancela cartão |
-| GET | `/faturas` | Lista faturas |
+| GET | `/faturas` | Lista faturas e permite filtros por query params |
 | GET | `/faturas/{id}` | Busca fatura por ID |
 | POST | `/faturas` | Cria fatura |
 | PUT | `/faturas/{id}` | Atualiza fatura |
@@ -185,6 +186,53 @@ Login válido retorna um token fake:
 }
 ```
 
+## Parâmetros e headers para estudo
+
+Estes cenários foram adicionados para estudar `pathParam`, `queryParam`, `header`, `contentType` e `accept` no REST Assured.
+
+### Path param
+
+```text
+GET /clientes/1
+GET /cartoes/1
+GET /faturas/1
+```
+
+### Query params
+
+```text
+GET /clientes?ativo=true
+GET /clientes?nome=Cliente
+GET /cartoes?status=ATIVO
+GET /cartoes?cliente_id=1
+GET /faturas?status=ABERTA
+GET /faturas?cliente_id=1&cartao_id=1
+```
+
+### Headers de requisição e resposta
+
+```text
+GET /headers
+```
+
+Headers aceitos para estudo:
+
+```text
+x-canal: bruno
+x-api-version: 1
+x-request-id: bruno-req-001
+Accept: application/json
+```
+
+A resposta inclui headers como:
+
+```text
+X-Pay-Lab
+X-API-Version
+X-Canal
+X-Request-ID
+```
+
 ## Dados iniciais previsiveis
 
 O arquivo `app/database/db.json` já vem preenchido com dados iniciais:
@@ -206,6 +254,8 @@ Estados importantes para testes:
 ## Regras de negocio
 
 - `GET /health` retorna `200`.
+- `GET /headers` retorna `200` quando `x-api-version` é `1`.
+- `GET /headers` retorna `400` quando `x-api-version` é inválido.
 - Login válido retorna `200` com token fake.
 - Login inválido retorna `401`.
 - Buscar recurso existente retorna `200`.
@@ -258,6 +308,8 @@ Fluxo recomendado:
    - Cliente com e-mail inválido
    - Cliente com CPF inválido
    - Bloqueio, desbloqueio e cancelamento de cartoes
+   - Query params na pasta `Parametros e Headers`
+   - Headers de requisição e resposta na pasta `Parametros e Headers`
    - Pagamento valido, valor divergente e fatura ja paga
 
 ## Uso futuro com REST Assured
@@ -267,6 +319,10 @@ Esta API foi pensada para facilitar automação com Java + REST Assured:
 - Validação de status code
 - Validação de headers, como `Content-Type: application/json`
 - Validação de body com JSONPath
+- Uso de `pathParam`
+- Uso de `queryParam`
+- Uso de `header`
+- Uso de `contentType` e `accept`
 - Validação de contrato JSON
 - Massa previsível com `POST /reset`
 

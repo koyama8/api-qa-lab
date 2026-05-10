@@ -12,12 +12,12 @@ http://localhost:8000
 
 Preparar a estrutura inicial para automatizar futuramente os endpoints da API com REST Assured.
 
-Neste momento, o projeto contem apenas:
+Neste momento, o projeto contem:
 
 - Configuracao Maven
 - Classe base de testes
 - Utilitario simples para reset da massa
-- Classes de teste com TODOs
+- Classes de teste para estudo gradual dos endpoints
 - POJOs basicos para payloads
 - Pastas preparadas para JSON Schema e payloads externos
 
@@ -107,6 +107,16 @@ automacao-rest-assured-api/
 │           └── payloads/
 ```
 
+## Estudos do topico 1.4
+
+A API tambem possui recursos para praticar parametros e formatos de comunicacao:
+
+- `pathParam`: `/clientes/{cliente_id}`, `/cartoes/{cartao_id}`, `/faturas/{fatura_id}`
+- `queryParam`: `/clientes?ativo=true`, `/cartoes?status=ATIVO`, `/faturas?cliente_id=1`
+- headers de requisicao: `x-canal`, `x-api-version`, `x-request-id`
+- headers de resposta: `X-Pay-Lab`, `X-API-Version`, `X-Canal`, `X-Request-ID`
+- `contentType` e `accept` configurados na `BaseTest`
+
 ## Proximos passos de automacao
 
 - Automatizar `GET /health`
@@ -115,13 +125,12 @@ automacao-rest-assured-api/
 - Automatizar endpoints de clientes
 - Automatizar cartoes
 - Automatizar faturas
-- Automatizar pagamentos
+- Evoluir estudos de parametros, headers, `contentType` e `accept`
 - Adicionar validacao de schema futuramente
 - Integrar ao GitHub Actions futuramente
 
 ## Observacoes
 
-- Este projeto ainda nao possui testes completos.
-- As classes em `tests/` foram criadas apenas com TODOs para evolucao manual.
+- Este projeto deve evoluir aos poucos, conforme os topicos de estudo.
 - A massa de dados da API deve ser restaurada com `POST /reset` antes dos cenarios automatizados.
 - A API Python/FastAPI deve estar rodando em `http://localhost:8000` para que os testes funcionem.
