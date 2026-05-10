@@ -79,6 +79,14 @@ Observação: `DELETE /clientes/{id}` e `DELETE /faturas/{id}` retornam `204 No 
 | GET | `/health` | Verifica se a API está online |
 | GET | `/headers` | Endpoint de estudo para headers de requisição e resposta |
 | POST | `/login` | Realiza login com usuario e senha fixos |
+| GET | `/auth/publica` | Endpoint publico para estudo de autenticacao |
+| GET | `/auth/api-key` | Endpoint protegido por API Key |
+| GET | `/auth/basic` | Endpoint protegido por Basic Auth |
+| GET | `/auth/bearer` | Endpoint protegido por Bearer Token |
+| GET | `/contratos/json/health` | Endpoint para estudo de contrato JSON do health |
+| GET | `/contratos/json/cliente` | Endpoint para estudo de contrato JSON de cliente |
+| GET | `/contratos/xml/cliente` | Endpoint para estudo de contrato XML de cliente |
+| GET | `/contratos/diferenca` | Explica validacao funcional e contratual |
 | GET | `/clientes` | Lista clientes e permite filtros por query params |
 | GET | `/clientes/{id}` | Busca cliente por ID |
 | POST | `/clientes` | Cria cliente |
@@ -238,6 +246,104 @@ X-Canal
 X-Request-ID
 ```
 
+## Autenticacoes para estudo
+
+Estes endpoints foram adicionados para estudar o topico 1.6 no REST Assured.
+
+### Acesso publico
+
+```text
+GET /auth/publica
+```
+
+Nao exige autenticacao.
+
+### API Key
+
+```text
+GET /auth/api-key
+```
+
+Header valido:
+
+```text
+x-api-key: qa-lab-api-key-123
+```
+
+Sem API Key ou com API Key invalida, a API retorna `401`.
+
+### Basic Auth
+
+```text
+GET /auth/basic
+```
+
+Credenciais validas:
+
+```text
+usuario: admin
+senha: 123456
+```
+
+Credenciais ausentes ou invalidas retornam `401`.
+
+### Bearer Token
+
+```text
+GET /auth/bearer
+```
+
+Header valido:
+
+```text
+Authorization: Bearer fake-token-qa-lab-123456
+```
+
+Token ausente ou invalido retorna `401`.
+
+## Contratos e schemas para estudo
+
+Estes endpoints foram adicionados para estudar validacao de contrato.
+
+### JSON Schema
+
+```text
+GET /contratos/json/health
+GET /contratos/json/cliente
+```
+
+Use estes retornos para validar arquivos `.schema.json` no REST Assured.
+
+Arquivos preparados no projeto Java:
+
+```text
+automacao-rest-assured-api/src/test/resources/schemas/health.schema.json
+automacao-rest-assured-api/src/test/resources/schemas/cliente.schema.json
+```
+
+### XML Schema
+
+```text
+GET /contratos/xml/cliente
+```
+
+Use este retorno para validar um arquivo `.xsd`.
+
+Arquivo preparado no projeto Java:
+
+```text
+automacao-rest-assured-api/src/test/resources/schemas/cliente.xsd
+```
+
+### Validacao funcional x validacao contratual
+
+```text
+GET /contratos/diferenca
+```
+
+Validacao funcional verifica comportamento, regra de negocio e valores.
+Validacao contratual verifica estrutura, campos obrigatorios e tipos.
+
 ## Dados iniciais previsiveis
 
 O arquivo `app/database/db.json` já vem preenchido com dados iniciais:
@@ -261,6 +367,17 @@ Estados importantes para testes:
 - `GET /health` retorna `200`.
 - `GET /headers` retorna `200` quando `x-api-version` é `1`.
 - `GET /headers` retorna `400` quando `x-api-version` é inválido.
+- `GET /auth/publica` retorna `200` sem autenticacao.
+- `GET /auth/api-key` retorna `200` com `x-api-key` valida.
+- `GET /auth/api-key` retorna `401` sem API Key ou com API Key invalida.
+- `GET /auth/basic` retorna `200` com Basic Auth valido.
+- `GET /auth/basic` retorna `401` com Basic Auth invalido.
+- `GET /auth/bearer` retorna `200` com Bearer Token valido.
+- `GET /auth/bearer` retorna `401` sem token ou com token invalido.
+- `GET /contratos/json/health` retorna JSON para validacao de contrato.
+- `GET /contratos/json/cliente` retorna JSON para validacao de contrato.
+- `GET /contratos/xml/cliente` retorna XML para validacao de contrato.
+- `GET /contratos/diferenca` retorna explicacao sobre validacao funcional e contratual.
 - Filtros por query param sem resultado retornam `404`.
 - Login válido retorna `200` com token fake.
 - Login inválido retorna `401`.
@@ -329,7 +446,10 @@ Esta API foi pensada para facilitar automação com Java + REST Assured:
 - Uso de `queryParam`
 - Uso de `header`
 - Uso de `contentType` e `accept`
+- Uso de API Key, Basic Auth e Bearer Token
 - Validação de contrato JSON
+- Validação de contrato XML
+- Uso de schemas em `src/test/resources/schemas`
 - Massa previsível com `POST /reset`
 
 Exemplo de estrategia:

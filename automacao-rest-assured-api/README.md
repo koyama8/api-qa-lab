@@ -27,6 +27,7 @@ Neste momento, o projeto contem:
 - Maven
 - JUnit 5
 - REST Assured
+- REST Assured JSON Schema Validator
 - Hamcrest
 - Jackson Databind
 - Maven Surefire Plugin
@@ -117,6 +118,49 @@ A API tambem possui recursos para praticar parametros e formatos de comunicacao:
 - headers de resposta: `X-Pay-Lab`, `X-API-Version`, `X-Canal`, `X-Request-ID`
 - `contentType` e `accept` configurados na `BaseTest`
 
+## Estudos do topico 1.6
+
+A classe `AutenticacoesTest.java` foi criada apenas com TODOs para estudo futuro de autenticacao em API.
+
+Endpoints preparados na API:
+
+- `GET /auth/publica`
+- `GET /auth/api-key`
+- `GET /auth/basic`
+- `GET /auth/bearer`
+
+Conceitos que serao praticados depois:
+
+- API publica
+- API Key com header `x-api-key`
+- Basic Auth
+- Bearer Token
+- Autenticacao aplicada aos testes REST Assured
+
+## Estudos de validacao de contrato
+
+A classe `ContratosSchemasTest.java` foi criada apenas com TODOs para estudo futuro de validacao de contrato.
+
+Endpoints preparados na API:
+
+- `GET /contratos/json/health`
+- `GET /contratos/json/cliente`
+- `GET /contratos/xml/cliente`
+- `GET /contratos/diferenca`
+
+Arquivos preparados em `src/test/resources/schemas`:
+
+- `health.schema.json`
+- `cliente.schema.json`
+- `cliente.xsd`
+
+Conceitos que serao praticados depois:
+
+- Validacao de schema JSON
+- Validacao de schema XML
+- Uso de arquivos de schema em resources
+- Diferenca entre validacao funcional e contratual
+
 ## Proximos passos de automacao
 
 - Automatizar `GET /health`
@@ -126,6 +170,8 @@ A API tambem possui recursos para praticar parametros e formatos de comunicacao:
 - Automatizar cartoes
 - Automatizar faturas
 - Evoluir estudos de parametros, headers, `contentType` e `accept`
+- Evoluir estudos de autenticacao com API Key, Basic Auth e Bearer Token
+- Evoluir estudos de validacao de contrato com JSON Schema e XML Schema
 - Adicionar validacao de schema futuramente
 - Integrar ao GitHub Actions futuramente
 

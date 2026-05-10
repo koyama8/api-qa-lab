@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 
 from pathlib import Path
 
-from app.routes import auth, cartoes, clientes, faturas, pagamentos
+from app.routes import auth, cartoes, clientes, contratos, faturas, pagamentos
 from app.services.storage import reset_database
 from app.utils.error_handlers import register_exception_handlers
 from app.utils.exceptions import ApiError
@@ -34,6 +34,21 @@ app = FastAPI(
             ),
         },
         {"name": "Auth", "description": "Login com usuário e senha fixos para estudo."},
+        {
+            "name": "Autenticacoes",
+            "description": (
+                "Endpoints didaticos para estudar acesso publico, "
+                "API Key, Basic Auth, Bearer Token e autenticacao aplicada aos testes."
+            ),
+        },
+        {
+            "name": "Contratos",
+            "description": (
+                "Endpoints didaticos para estudar validacao de contrato JSON, "
+                "validacao de contrato XML e diferenca entre validacao funcional "
+                "e contratual."
+            ),
+        },
         {"name": "Clientes", "description": "Cadastro, consulta, atualização e exclusão de clientes."},
         {"name": "Cartões", "description": "Cadastro, consulta e mudança de status de cartões."},
         {"name": "Faturas", "description": "Consulta, criação, atualização e exclusão de faturas."},
@@ -165,6 +180,7 @@ def validar_headers(
 
 
 app.include_router(auth.router)
+app.include_router(contratos.router)
 app.include_router(clientes.router)
 app.include_router(cartoes.router)
 app.include_router(faturas.router)
