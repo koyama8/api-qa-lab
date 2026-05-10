@@ -19,10 +19,28 @@ def _cliente_existe(database: dict, cliente_id: int) -> bool:
     return any(cliente["id"] == cliente_id for cliente in database["clientes"])
 
 
-@router.get("")
+@router.get(
+    "",
+    tags=["Parametros e Headers"],
+    summary="Listar cartões com query params",
+    description=(
+        "Lista cartões e permite estudar query params. "
+        "Use `status=ATIVO`, `status=BLOQUEADO` ou `status=CANCELADO`. "
+        "Também é possível filtrar por `cliente_id=1`."
+    ),
+)
 def listar_cartoes(
-    cliente_id: int | None = Query(default=None, gt=0, description="Filtra cartões pelo ID do cliente."),
-    status: CartaoStatus | None = Query(default=None, description="Filtra cartões por status."),
+    cliente_id: int | None = Query(
+        default=None,
+        gt=0,
+        description="Filtra cartões pelo ID do cliente.",
+        examples=[1],
+    ),
+    status: CartaoStatus | None = Query(
+        default=None,
+        description="Filtra cartões por status.",
+        examples=["ATIVO"],
+    ),
 ):
     database = read_database()
     cartoes = database["cartoes"]
@@ -156,3 +174,4 @@ def cancelar_cartao(cartao_id: int):
     write_database(database)
 
     return success_response(data=cartao)
+

@@ -15,10 +15,27 @@ def _find_cliente(database: dict, cliente_id: int) -> dict | None:
     )
 
 
-@router.get("")
+@router.get(
+    "",
+    tags=["Parametros e Headers"],
+    summary="Listar clientes com query params",
+    description=(
+        "Lista clientes e permite estudar query params. "
+        "Use `ativo=true` para filtrar clientes ativos ou `nome=Cliente` "
+        "para filtrar por parte do nome."
+    ),
+)
 def listar_clientes(
-    ativo: bool | None = Query(default=None, description="Filtra clientes ativos ou inativos."),
-    nome: str | None = Query(default=None, description="Filtra clientes por parte do nome."),
+    ativo: bool | None = Query(
+        default=None,
+        description="Filtra clientes ativos ou inativos.",
+        examples=[True],
+    ),
+    nome: str | None = Query(
+        default=None,
+        description="Filtra clientes por parte do nome.",
+        examples=["Cliente"],
+    ),
 ):
     database = read_database()
     clientes = database["clientes"]
@@ -110,3 +127,4 @@ def deletar_cliente(cliente_id: int):
     write_database(database)
 
     return Response(status_code=204)
+

@@ -56,11 +56,34 @@ def _to_float(value: Decimal) -> float:
     return float(value)
 
 
-@router.get("/faturas")
+@router.get(
+    "/faturas",
+    tags=["Parametros e Headers"],
+    summary="Listar faturas com query params",
+    description=(
+        "Lista faturas e permite estudar query params. "
+        "Use `status=ABERTA`, `status=FECHADA` ou `status=PAGA`. "
+        "Também é possível combinar filtros como `cliente_id=1&cartao_id=1`."
+    ),
+)
 def listar_faturas(
-    cliente_id: int | None = Query(default=None, gt=0, description="Filtra faturas pelo ID do cliente."),
-    cartao_id: int | None = Query(default=None, gt=0, description="Filtra faturas pelo ID do cartão."),
-    status: FaturaStatus | None = Query(default=None, description="Filtra faturas por status."),
+    cliente_id: int | None = Query(
+        default=None,
+        gt=0,
+        description="Filtra faturas pelo ID do cliente.",
+        examples=[1],
+    ),
+    cartao_id: int | None = Query(
+        default=None,
+        gt=0,
+        description="Filtra faturas pelo ID do cartão.",
+        examples=[1],
+    ),
+    status: FaturaStatus | None = Query(
+        default=None,
+        description="Filtra faturas por status.",
+        examples=["ABERTA"],
+    ),
 ):
     database = read_database()
     faturas = database["faturas"]
@@ -190,3 +213,4 @@ def listar_faturas_do_cliente(cliente_id: int):
     ]
 
     return success_response(data=faturas)
+

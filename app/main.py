@@ -21,6 +21,24 @@ app = FastAPI(
         "REST Assured, Cypress e CI/CD."
     ),
     version="1.0.0",
+    openapi_tags=[
+        {
+            "name": "Sistema",
+            "description": "Endpoints de saúde da API, reset de massa e estudos de headers.",
+        },
+        {
+            "name": "Parametros e Headers",
+            "description": (
+                "Tópico 1.4: use estes endpoints no Swagger para praticar "
+                "path params, query params, headers, Content-Type e Accept."
+            ),
+        },
+        {"name": "Auth", "description": "Login com usuário e senha fixos para estudo."},
+        {"name": "Clientes", "description": "Cadastro, consulta, atualização e exclusão de clientes."},
+        {"name": "Cartões", "description": "Cadastro, consulta e mudança de status de cartões."},
+        {"name": "Faturas", "description": "Consulta, criação, atualização e exclusão de faturas."},
+        {"name": "Pagamentos", "description": "Pagamento de faturas e regras financeiras."},
+    ],
 )
 
 app.add_middleware(
@@ -52,27 +70,72 @@ def reset():
     return success_response(data=data)
 
 
-@app.get("/headers", tags=["Sistema"])
+@app.get(
+    "/headers",
+    tags=["Parametros e Headers"],
+    summary="Estudar headers de requisição e resposta",
+    description=(
+        "Endpoint didático para praticar `header()` no REST Assured. "
+        "Envie headers como `x-canal`, `x-api-version`, `x-request-id` "
+        "e valide os headers de resposta `X-Pay-Lab`, `X-API-Version`, "
+        "`X-Canal` e `X-Request-ID`."
+    ),
+    responses={
+        200: {
+            "description": "Headers válidos.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "success": True,
+                        "message": "Operação realizada com sucesso",
+                        "data": {
+                            "canal": "bruno",
+                            "api_version": "1",
+                            "request_id": "bruno-req-001",
+                            "accept": "application/json",
+                        },
+                    }
+                }
+            },
+        },
+        400: {
+            "description": "Header x-api-version inválido.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "success": False,
+                        "message": "Header x-api-version inválido. Use o valor 1.",
+                        "error": "VALIDATION_ERROR",
+                    }
+                }
+            },
+        },
+    },
+)
 def validar_headers(
     x_canal: str | None = Header(
         default=None,
         alias="x-canal",
         description="Canal que está chamando a API, como bruno ou rest-assured.",
+        examples=["bruno"],
     ),
     x_api_version: str = Header(
         default="1",
         alias="x-api-version",
         description="Versão esperada da API para estudo de headers.",
+        examples=["1"],
     ),
     x_request_id: str | None = Header(
         default=None,
         alias="x-request-id",
         description="Identificador da requisição enviado pelo cliente.",
+        examples=["bruno-req-001"],
     ),
     accept: str | None = Header(
         default=None,
         alias="accept",
         description="Formato aceito pelo cliente.",
+        examples=["application/json"],
     ),
 ):
     if x_api_version != "1":
@@ -106,3 +169,4 @@ app.include_router(clientes.router)
 app.include_router(cartoes.router)
 app.include_router(faturas.router)
 app.include_router(pagamentos.router)
+
