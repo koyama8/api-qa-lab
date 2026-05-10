@@ -65,6 +65,20 @@ def _to_float(value: Decimal) -> float:
         "Use `status=ABERTA`, `status=FECHADA` ou `status=PAGA`. "
         "Também é possível combinar filtros como `cliente_id=1&cartao_id=1`."
     ),
+    responses={
+        404: {
+            "description": "Nenhuma fatura encontrada para os filtros informados.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "success": False,
+                        "message": "Nenhuma fatura encontrada para os filtros informados.",
+                        "error": "NOT_FOUND",
+                    }
+                }
+            },
+        }
+    },
 )
 def listar_faturas(
     cliente_id: int | None = Query(
@@ -87,6 +101,7 @@ def listar_faturas(
 ):
     database = read_database()
     faturas = database["faturas"]
+    tem_filtro = cliente_id is not None or cartao_id is not None or status is not None
 
     if cliente_id is not None:
         faturas = [
@@ -98,6 +113,13 @@ def listar_faturas(
 
     if status is not None:
         faturas = [fatura for fatura in faturas if fatura["status"] == status.value]
+
+    if tem_filtro and not faturas:
+        raise ApiError(
+            status_code=404,
+            message="Nenhuma fatura encontrada para os filtros informados.",
+            error="NOT_FOUND",
+        )
 
     return success_response(
         data=faturas,

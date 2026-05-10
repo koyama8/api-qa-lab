@@ -203,11 +203,16 @@ GET /faturas/1
 ```text
 GET /clientes?ativo=true
 GET /clientes?nome=Cliente
+GET /clientes?nome=NomeInexistente
 GET /cartoes?status=ATIVO
 GET /cartoes?cliente_id=1
+GET /cartoes?cliente_id=999
 GET /faturas?status=ABERTA
 GET /faturas?cliente_id=1&cartao_id=1
+GET /faturas?cliente_id=999
 ```
+
+Quando um filtro por query param não encontra registros, a API retorna `404` com `success=false` e mensagem clara para automação de cenário negativo.
 
 ### Headers de requisição e resposta
 
@@ -256,6 +261,7 @@ Estados importantes para testes:
 - `GET /health` retorna `200`.
 - `GET /headers` retorna `200` quando `x-api-version` é `1`.
 - `GET /headers` retorna `400` quando `x-api-version` é inválido.
+- Filtros por query param sem resultado retornam `404`.
 - Login válido retorna `200` com token fake.
 - Login inválido retorna `401`.
 - Buscar recurso existente retorna `200`.

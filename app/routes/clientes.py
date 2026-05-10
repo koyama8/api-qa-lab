@@ -24,6 +24,20 @@ def _find_cliente(database: dict, cliente_id: int) -> dict | None:
         "Use `ativo=true` para filtrar clientes ativos ou `nome=Cliente` "
         "para filtrar por parte do nome."
     ),
+    responses={
+        404: {
+            "description": "Nenhum cliente encontrado para os filtros informados.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "success": False,
+                        "message": "Nenhum cliente encontrado para os filtros informados.",
+                        "error": "NOT_FOUND",
+                    }
+                }
+            },
+        }
+    },
 )
 def listar_clientes(
     ativo: bool | None = Query(
@@ -39,6 +53,7 @@ def listar_clientes(
 ):
     database = read_database()
     clientes = database["clientes"]
+    tem_filtro = ativo is not None or bool(nome)
 
     if ativo is not None:
         clientes = [cliente for cliente in clientes if cliente["ativo"] == ativo]
@@ -50,6 +65,13 @@ def listar_clientes(
             for cliente in clientes
             if nome_normalizado in cliente["nome"].lower()
         ]
+
+    if tem_filtro and not clientes:
+        raise ApiError(
+            status_code=404,
+            message="Nenhum cliente encontrado para os filtros informados.",
+            error="NOT_FOUND",
+        )
 
     return success_response(
         data=clientes,

@@ -28,6 +28,20 @@ def _cliente_existe(database: dict, cliente_id: int) -> bool:
         "Use `status=ATIVO`, `status=BLOQUEADO` ou `status=CANCELADO`. "
         "Também é possível filtrar por `cliente_id=1`."
     ),
+    responses={
+        404: {
+            "description": "Nenhum cartão encontrado para os filtros informados.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "success": False,
+                        "message": "Nenhum cartão encontrado para os filtros informados.",
+                        "error": "NOT_FOUND",
+                    }
+                }
+            },
+        }
+    },
 )
 def listar_cartoes(
     cliente_id: int | None = Query(
@@ -44,6 +58,7 @@ def listar_cartoes(
 ):
     database = read_database()
     cartoes = database["cartoes"]
+    tem_filtro = cliente_id is not None or status is not None
 
     if cliente_id is not None:
         cartoes = [
@@ -52,6 +67,13 @@ def listar_cartoes(
 
     if status is not None:
         cartoes = [cartao for cartao in cartoes if cartao["status"] == status.value]
+
+    if tem_filtro and not cartoes:
+        raise ApiError(
+            status_code=404,
+            message="Nenhum cartão encontrado para os filtros informados.",
+            error="NOT_FOUND",
+        )
 
     return success_response(
         data=cartoes,
