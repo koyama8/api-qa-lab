@@ -161,6 +161,48 @@ Conceitos que serao praticados depois:
 - Uso de arquivos de schema em resources
 - Diferenca entre validacao funcional e contratual
 
+## Estudos de arquivos e comportamento avancado
+
+A classe `ArquivosComportamentoTest.java` foi criada apenas com TODOs para estudo futuro de arquivos e comportamento avancado.
+
+Endpoints preparados na API:
+
+- `POST /arquivos/upload`
+- `GET /arquivos/download`
+- `GET /arquivos/metadados`
+- `GET /comportamento/delay?segundos=1`
+
+Arquivo preparado em `src/test/resources/payloads`:
+
+- `upload-estudo.txt`
+
+Conceitos que serao praticados depois:
+
+- Upload multipart/form-data
+- Download de arquivo
+- Validacao de metadados do arquivo
+- Validacao de headers de download
+- Tempo maximo de resposta
+- Timeout dos testes
+
+## Estudos de HTML e XPath
+
+A classe `HtmlXPathTest.java` foi criada apenas com TODOs para estudo futuro de HTML e XPath.
+
+Endpoints preparados na API:
+
+- `GET /html/estudo`
+- `GET /html/clientes`
+
+Conceitos que serao praticados depois:
+
+- Trabalhar com resposta HTML
+- Validar `Content-Type: text/html`
+- Extrair HTML como String
+- Validar tags, textos e atributos
+- Estudar XPath com HTML
+- Localizar elementos por id, texto, atributo e posicao
+
 ## Proximos passos de automacao
 
 - Automatizar `GET /health`
@@ -172,6 +214,8 @@ Conceitos que serao praticados depois:
 - Evoluir estudos de parametros, headers, `contentType` e `accept`
 - Evoluir estudos de autenticacao com API Key, Basic Auth e Bearer Token
 - Evoluir estudos de validacao de contrato com JSON Schema e XML Schema
+- Evoluir estudos de upload, download, metadados e timeout
+- Evoluir estudos de HTML e XPath
 - Adicionar validacao de schema futuramente
 - Integrar ao GitHub Actions futuramente
 

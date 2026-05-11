@@ -1,0 +1,4 @@
+Pay Lab - arquivo de estudo
+
+Este arquivo existe para praticar download, headers de resposta,
+metadados do arquivo e validacoes com REST Assured.

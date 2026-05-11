@@ -87,6 +87,12 @@ Observação: `DELETE /clientes/{id}` e `DELETE /faturas/{id}` retornam `204 No 
 | GET | `/contratos/json/cliente` | Endpoint para estudo de contrato JSON de cliente |
 | GET | `/contratos/xml/cliente` | Endpoint para estudo de contrato XML de cliente |
 | GET | `/contratos/diferenca` | Explica validacao funcional e contratual |
+| POST | `/arquivos/upload` | Upload de arquivo para estudo multipart |
+| GET | `/arquivos/download` | Download de arquivo de estudo |
+| GET | `/arquivos/metadados` | Metadados do arquivo de download |
+| GET | `/comportamento/delay` | Delay artificial para estudar tempo maximo e timeout |
+| GET | `/html/estudo` | Pagina HTML para estudo |
+| GET | `/html/clientes` | Tabela HTML para estudo de XPath |
 | GET | `/clientes` | Lista clientes e permite filtros por query params |
 | GET | `/clientes/{id}` | Busca cliente por ID |
 | POST | `/clientes` | Cria cliente |
@@ -344,6 +350,107 @@ GET /contratos/diferenca
 Validacao funcional verifica comportamento, regra de negocio e valores.
 Validacao contratual verifica estrutura, campos obrigatorios e tipos.
 
+## Arquivos e comportamento avancado
+
+Estes endpoints foram adicionados para estudar upload, download, metadados de arquivo e tempo maximo dos testes.
+
+### Upload de arquivo
+
+```text
+POST /arquivos/upload
+```
+
+Envie um arquivo multipart/form-data no campo:
+
+```text
+arquivo
+```
+
+A resposta retorna metadados do arquivo enviado:
+
+```text
+nome
+content_type
+tamanho_bytes
+extensao
+salvo
+```
+
+### Download de arquivo
+
+```text
+GET /arquivos/download
+```
+
+Retorna o arquivo de estudo `pay-lab-estudo.txt`.
+
+Use para validar:
+
+```text
+Content-Type
+Content-Disposition
+Content-Length
+bytes do arquivo
+```
+
+### Metadados do arquivo
+
+```text
+GET /arquivos/metadados
+```
+
+Retorna nome, tipo, tamanho, extensao, hash `sha256` e URL de download.
+
+### Tempo maximo / timeout
+
+```text
+GET /comportamento/delay?segundos=1
+```
+
+Use para estudar tempo de resposta e validacoes como `time(lessThan(...))` no REST Assured.
+
+## HTML e XPath para estudo
+
+Estes endpoints foram adicionados para estudar respostas HTML e XPath com HTML.
+
+### Pagina HTML de estudo
+
+```text
+GET /html/estudo
+```
+
+Retorna uma pagina HTML simples com:
+
+```text
+title
+h1
+section
+ul
+li
+link
+atributos id, class e data-*
+```
+
+Use para estudar validacoes de `Content-Type`, texto, tags e atributos.
+
+### Tabela HTML de clientes
+
+```text
+GET /html/clientes
+```
+
+Retorna uma tabela HTML previsivel para praticar XPath.
+
+Exemplos de XPath para estudo:
+
+```text
+//*[@id='titulo-principal']
+//*[@id='tabela-clientes']
+//td[text()='Cliente Pay Lab']
+//tr[@data-cliente-id='1']
+//table[@id='tabela-clientes']/tbody/tr[1]/td[2]
+```
+
 ## Dados iniciais previsiveis
 
 O arquivo `app/database/db.json` já vem preenchido com dados iniciais:
@@ -378,6 +485,12 @@ Estados importantes para testes:
 - `GET /contratos/json/cliente` retorna JSON para validacao de contrato.
 - `GET /contratos/xml/cliente` retorna XML para validacao de contrato.
 - `GET /contratos/diferenca` retorna explicacao sobre validacao funcional e contratual.
+- `POST /arquivos/upload` retorna `200` com metadados do arquivo enviado.
+- `GET /arquivos/download` retorna `200` com arquivo para download.
+- `GET /arquivos/metadados` retorna `200` com metadados do arquivo de estudo.
+- `GET /comportamento/delay` retorna `200` apos o tempo solicitado.
+- `GET /html/estudo` retorna `200` com HTML para estudo.
+- `GET /html/clientes` retorna `200` com tabela HTML para XPath.
 - Filtros por query param sem resultado retornam `404`.
 - Login válido retorna `200` com token fake.
 - Login inválido retorna `401`.
@@ -450,6 +563,12 @@ Esta API foi pensada para facilitar automação com Java + REST Assured:
 - Validação de contrato JSON
 - Validação de contrato XML
 - Uso de schemas em `src/test/resources/schemas`
+- Upload multipart/form-data
+- Download de arquivos
+- Validacao de metadados de arquivo
+- Validacao de tempo de resposta e timeout
+- Leitura de HTML
+- XPath com HTML
 - Massa previsível com `POST /reset`
 
 Exemplo de estrategia:

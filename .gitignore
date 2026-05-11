@@ -11,3 +11,4 @@ bin/
 .project
 .settings/
 .sonarlint/
+app/database/uploads/

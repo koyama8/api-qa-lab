@@ -1,0 +1,3 @@
+Arquivo de upload para estudo REST Assured.
+
+Use este arquivo quando for praticar multipart/form-data.
