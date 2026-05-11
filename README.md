@@ -87,6 +87,11 @@ Observação: `DELETE /clientes/{id}` e `DELETE /faturas/{id}` retornam `204 No 
 | GET | `/contratos/json/cliente` | Endpoint para estudo de contrato JSON de cliente |
 | GET | `/contratos/xml/cliente` | Endpoint para estudo de contrato XML de cliente |
 | GET | `/contratos/diferenca` | Explica validacao funcional e contratual |
+| POST | `/serializacao/json/map` | Recebe um Map JSON para estudo de serializacao |
+| POST | `/serializacao/json/cliente` | Recebe um objeto cliente em JSON para estudo de serializacao |
+| GET | `/serializacao/json/cliente` | Retorna JSON para estudo de desserializacao |
+| POST | `/serializacao/xml/cliente` | Recebe XML para estudo de serializacao |
+| GET | `/serializacao/xml/cliente` | Retorna XML para estudo de desserializacao |
 | POST | `/arquivos/upload` | Upload de arquivo para estudo multipart |
 | GET | `/arquivos/download` | Download de arquivo de estudo |
 | GET | `/arquivos/metadados` | Metadados do arquivo de download |
@@ -251,6 +256,74 @@ X-API-Version
 X-Canal
 X-Request-ID
 ```
+
+## Serializacao e desserializacao para estudo
+
+Estes endpoints foram adicionados para estudar o topico 1.5 no REST Assured.
+
+### Serializando Map para JSON
+
+```text
+POST /serializacao/json/map
+```
+
+Payload exemplo:
+
+```json
+{
+  "origem": "bruno",
+  "ativo": true,
+  "quantidade": 3
+}
+```
+
+### Serializando objeto para JSON
+
+```text
+POST /serializacao/json/cliente
+```
+
+Payload exemplo:
+
+```json
+{
+  "nome": "Cliente Serializacao",
+  "email": "serializacao@email.com",
+  "cpf": "12345678900"
+}
+```
+
+### Desserializando resposta JSON para objeto
+
+```text
+GET /serializacao/json/cliente
+```
+
+Use este retorno para praticar `response.as(...)`, POJOs de resposta ou leitura com JSONPath.
+
+### Serializacao para XML
+
+```text
+POST /serializacao/xml/cliente
+```
+
+Payload exemplo:
+
+```xml
+<cliente>
+  <nome>Cliente XML</nome>
+  <email>xml@email.com</email>
+  <cpf>12345678900</cpf>
+</cliente>
+```
+
+### Desserializacao de XML
+
+```text
+GET /serializacao/xml/cliente
+```
+
+Use este retorno para praticar leitura com `XmlPath`, `response.asString()` ou desserializacao XML.
 
 ## Autenticacoes para estudo
 
@@ -485,6 +558,12 @@ Estados importantes para testes:
 - `GET /contratos/json/cliente` retorna JSON para validacao de contrato.
 - `GET /contratos/xml/cliente` retorna XML para validacao de contrato.
 - `GET /contratos/diferenca` retorna explicacao sobre validacao funcional e contratual.
+- `POST /serializacao/json/map` retorna `200` com o Map recebido.
+- `POST /serializacao/json/cliente` retorna `200` com o objeto cliente recebido.
+- `GET /serializacao/json/cliente` retorna `200` com JSON para desserializacao.
+- `POST /serializacao/xml/cliente` retorna `200` com XML quando o corpo XML e valido.
+- `POST /serializacao/xml/cliente` retorna `400` quando o XML e invalido.
+- `GET /serializacao/xml/cliente` retorna `200` com XML para desserializacao.
 - `POST /arquivos/upload` retorna `200` com metadados do arquivo enviado.
 - `GET /arquivos/download` retorna `200` com arquivo para download.
 - `GET /arquivos/metadados` retorna `200` com metadados do arquivo de estudo.
@@ -546,6 +625,7 @@ Fluxo recomendado:
    - Bloqueio, desbloqueio e cancelamento de cartoes
    - Query params na pasta `Parametros e Headers`
    - Headers de requisição e resposta na pasta `Parametros e Headers`
+   - Serializacao e desserializacao na pasta `Serializacao e Desserializacao`
    - Pagamento valido, valor divergente e fatura ja paga
 
 ## Uso futuro com REST Assured
@@ -560,6 +640,11 @@ Esta API foi pensada para facilitar automação com Java + REST Assured:
 - Uso de `header`
 - Uso de `contentType` e `accept`
 - Uso de API Key, Basic Auth e Bearer Token
+- Serializacao de Map para JSON
+- Serializacao de objeto Java para JSON
+- Desserializacao de resposta JSON para objeto
+- Serializacao para XML
+- Desserializacao de resposta XML
 - Validação de contrato JSON
 - Validação de contrato XML
 - Uso de schemas em `src/test/resources/schemas`

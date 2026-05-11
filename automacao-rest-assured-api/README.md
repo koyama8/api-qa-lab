@@ -118,6 +118,27 @@ A API tambem possui recursos para praticar parametros e formatos de comunicacao:
 - headers de resposta: `X-Pay-Lab`, `X-API-Version`, `X-Canal`, `X-Request-ID`
 - `contentType` e `accept` configurados na `BaseTest`
 
+## Estudos do topico 1.5
+
+A classe `SerializacaoDesserializacaoTest.java` foi criada apenas com TODOs para estudo futuro de serializacao e desserializacao.
+
+Endpoints preparados na API:
+
+- `POST /serializacao/json/map`
+- `POST /serializacao/json/cliente`
+- `GET /serializacao/json/cliente`
+- `POST /serializacao/xml/cliente`
+- `GET /serializacao/xml/cliente`
+
+Conceitos que serao praticados depois:
+
+- Serializar `Map` para JSON
+- Serializar objeto Java para JSON
+- Desserializar resposta JSON para objeto Java
+- Serializar XML
+- Desserializar resposta XML
+- Trabalhar com `Content-Type` e `Accept` em JSON e XML
+
 ## Estudos do topico 1.6
 
 A classe `AutenticacoesTest.java` foi criada apenas com TODOs para estudo futuro de autenticacao em API.
@@ -212,6 +233,7 @@ Conceitos que serao praticados depois:
 - Automatizar cartoes
 - Automatizar faturas
 - Evoluir estudos de parametros, headers, `contentType` e `accept`
+- Evoluir estudos de serializacao e desserializacao em JSON e XML
 - Evoluir estudos de autenticacao com API Key, Basic Auth e Bearer Token
 - Evoluir estudos de validacao de contrato com JSON Schema e XML Schema
 - Evoluir estudos de upload, download, metadados e timeout

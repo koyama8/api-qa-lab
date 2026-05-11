@@ -14,6 +14,7 @@ from app.routes import (
     faturas,
     html_xpath,
     pagamentos,
+    serializacao,
 )
 from app.services.storage import reset_database
 from app.utils.error_handlers import register_exception_handlers
@@ -70,6 +71,14 @@ app = FastAPI(
             "description": (
                 "Endpoints didaticos para estudar respostas HTML, leitura de "
                 "conteudo HTML e seletores XPath."
+            ),
+        },
+        {
+            "name": "Serializacao",
+            "description": (
+                "Endpoints didaticos para estudar serializacao de Map e objeto "
+                "para JSON, desserializacao de JSON para objeto, serializacao "
+                "para XML e leitura de XML."
             ),
         },
         {"name": "Clientes", "description": "Cadastro, consulta, atualização e exclusão de clientes."},
@@ -206,6 +215,7 @@ app.include_router(auth.router)
 app.include_router(contratos.router)
 app.include_router(arquivos.router)
 app.include_router(html_xpath.router)
+app.include_router(serializacao.router)
 app.include_router(clientes.router)
 app.include_router(cartoes.router)
 app.include_router(faturas.router)
