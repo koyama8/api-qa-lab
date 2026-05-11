@@ -97,6 +97,31 @@ public class FaturasTest extends BaseTest {
 		;
 	}
 	
+	@Test
+	public void deveRetornar200AoBuscarFaturasPorStatusComQueryParam() {
+		given()
+		    .queryParam("status", "ABERTA")
+		.when()
+	        .get("/faturas")	
+	    .then() 
+	        .statusCode(200)		
+		;
+	}
+	
+	@Test
+	public void deveRetornar200AoBuscarFaturasPorClienteECartaoComQueryParam() {
+		given()
+		    .queryParam("cartao_id", 1)
+		    .queryParam("cartao_id", 1)
+		.when()    
+		    .get("/faturas")
+		.then()
+		    .statusCode(200)
+		    .body("success", equalTo(true))
+		    .body("message", equalTo("Operação realizada com sucesso"))
+		;
+	}
+	
 
 	private FaturaPayload faturaPayload() {
 		FaturaPayload body = new FaturaPayload();

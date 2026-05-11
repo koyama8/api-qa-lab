@@ -124,6 +124,38 @@ public class ClientesTest extends BaseTest {
     	  ;
     }
     
+    @Test
+    public void deveRetornar200AoBuscarClienteExistenteComPathParam() {
+        given()
+            .pathParam("clienteId", 1)
+        .when()
+            .get("/clientes/{clienteId}")
+        .then()
+            .statusCode(200);
+    }
+    
+    @Test
+    public void deveRetornar200AoBuscarClientesAtivosComQueryParam() {
+    	   given()
+    	       .queryParam("ativo", true)
+    	   .when()
+	       .get("/clientes")
+	   .then() 
+	       .statusCode(200)
+    	   ;
+    }
+    
+    @Test
+    public void deveRetornar200AoBuscarClientesPorNomeComQueryParam() {
+    	   given()
+    	       .queryParam("nome", "Ana")
+    	   .when()
+    	       .get("/clientes")
+    	   .then() 	   
+           .statusCode(200)   	
+    	   ;
+    }
+    
 
 	private ClientePayload clienteValido() {
 		ClientePayload body = new ClientePayload();

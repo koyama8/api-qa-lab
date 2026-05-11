@@ -167,7 +167,7 @@ def validar_headers(
         examples=["bruno"],
     ),
     x_api_version: str = Header(
-        default="1",
+        ...,
         alias="x-api-version",
         description="Versão esperada da API para estudo de headers.",
         examples=["1"],

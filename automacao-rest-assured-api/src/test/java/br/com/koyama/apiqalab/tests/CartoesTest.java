@@ -21,6 +21,7 @@ public class CartoesTest extends BaseTest {
 		     .statusCode(200)
 		;
 	}
+	
     @Test
 	public void deveRetornar200AoBuscarCartaoExistente() {
 		given()
@@ -41,6 +42,7 @@ public class CartoesTest extends BaseTest {
     	     .body("message", equalTo("Cartão não encontrado."))
     	;
     }
+    
     @Test
     public void deveRetornar201CartaoValido() {
         given()
@@ -65,7 +67,6 @@ public class CartoesTest extends BaseTest {
     	;
     }
     
-    // TODO: implementar teste PUT /cartoes/{id}/desbloquear retornando 200
     @Test
     public void deveRetornar200DesbloquearCartao() {
     	given()
@@ -77,7 +78,7 @@ public class CartoesTest extends BaseTest {
     	     .body("data.status", equalTo("ATIVO"))
     	;
     }
-    // TODO: implementar teste PUT /cartoes/{id}/cancelar retornando 200
+
     @Test
     public void deveRetornar200CartaoCancelado() {
     	given()
@@ -99,6 +100,30 @@ public class CartoesTest extends BaseTest {
     	     .body("message", equalTo("Cartão cancelado não pode ser bloqueado."))
     	  ;
     }
+    
+    @Test
+    public void deveRetornar200AoBuscarCartoesAtivosComQueryParam() {
+    	   given()
+    	       .queryParam("status", "ATIVO")
+    	   .when() 
+    	       .get("/cartoes")
+    	   .then()    
+    	       .statusCode(200)
+    	   ;
+    }
+    
+    @Test
+    public void deveRetornar200AoBuscarCartoesDoClienteComQueryParam() {
+    	    given()
+    	        .queryParam("cliente_id", 4)
+    	    .when()
+    	        .get("/cartoes")
+    	    .then()
+    	        .statusCode(200)
+    	    ;
+    }
+    
+    
     
     private CartaoPayload cartaoValido() {
     	CartaoPayload body = new CartaoPayload();
