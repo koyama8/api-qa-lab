@@ -111,7 +111,7 @@ public class FaturasTest extends BaseTest {
 	@Test
 	public void deveRetornar200AoBuscarFaturasPorClienteECartaoComQueryParam() {
 		given()
-		    .queryParam("cartao_id", 1)
+		    .queryParam("cliente_id", 1)
 		    .queryParam("cartao_id", 1)
 		.when()    
 		    .get("/faturas")

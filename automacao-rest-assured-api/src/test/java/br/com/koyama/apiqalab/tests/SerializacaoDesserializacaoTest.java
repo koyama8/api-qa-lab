@@ -17,8 +17,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 
     // TODO: implementar teste POST /serializacao/json/map serializando Map para JSON
     // TODO: validar status 200, success=true e data.tipo=MAP_JSON
-    // TODO: validar que os campos enviados no Map voltam em data.recebido
-	
+    // TODO: validar que os campos enviados no Map voltam em data.recebido	
 	@Test
 	public void deveSerializarMapParaJsonComSucesso() {
 		Map<String, Object> body = new HashMap<>();
@@ -42,7 +41,6 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
     // TODO: implementar teste POST /serializacao/json/cliente serializando objeto ClientePayload para JSON
     // TODO: validar status 200, success=true e data.tipo=OBJETO_JSON
     // TODO: validar nome, email e cpf retornados no body
-	
 	@Test
 	public void deveSerializarObjetoJavaParaJsonComSucesso() {
 		ClienteResponse body = new ClienteResponse();

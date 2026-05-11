@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.math.BigDecimal;
 
+import org.hamcrest.number.BigDecimalCloseTo;
 import org.junit.jupiter.api.Test;
 
 public class CartoesTest extends BaseTest {
@@ -109,6 +110,20 @@ public class CartoesTest extends BaseTest {
     	       .get("/cartoes")
     	   .then()    
     	       .statusCode(200)
+   	       .body("message", equalTo("Operação realizada com sucesso"))
+
+    	   ;
+    }
+    
+    @Test
+    public void deveRetornar200AoBuscarCartoesBloqueadoComQueryParam() {
+    	   given()
+    	       .queryParam("status", "BLOQUEADO")
+    	   .when()
+    	        .get("/cartoes")
+    	   .then() 
+    	        .statusCode(200)
+    	        .body("message", equalTo("Operação realizada com sucesso"))
     	   ;
     }
     
@@ -120,6 +135,19 @@ public class CartoesTest extends BaseTest {
     	        .get("/cartoes")
     	    .then()
     	        .statusCode(200)
+    	    ;
+    }
+        
+    @Test
+    public void deveRetornar200AoBuscarNumeroCartaoDoClienteComQueryParam() {
+    	    given()
+    	        .queryParam("cliente_id", 2)
+    	    .when()
+            .get("/cartoes")
+         .then()
+            .statusCode(200)
+            .body("data[0].numero_masked", equalTo("**** **** **** 5555"))
+            .body("data[0].limite", equalTo(1000.0F))
     	    ;
     }
     

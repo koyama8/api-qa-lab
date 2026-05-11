@@ -74,8 +74,24 @@ public class AuthTest extends BaseTest {
          .then()
              .statusCode(200)
              .body("success", equalTo(true))
+             .body("data.token", equalTo("fake-token-qa-lab-123456"))
          ;
 	}
+	
+	@Test
+	public void deveRetornar401NoLoginInvalidoValidoComContentTypeEAcceptJson() {
+		given()
+		    .contentType(ContentType.JSON)
+		    .accept(ContentType.JSON)
+		    .body(criarLoginInvalido())
+		.when()
+		    .post("/login")
+		.then()   
+		    .statusCode(401)
+		    .body("message", equalTo("Usuário ou senha inválidos."))
+		;
+	}
+	
 
 	
 	

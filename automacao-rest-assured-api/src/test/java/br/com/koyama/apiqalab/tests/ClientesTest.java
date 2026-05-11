@@ -137,12 +137,24 @@ public class ClientesTest extends BaseTest {
     @Test
     public void deveRetornar200AoBuscarClientesAtivosComQueryParam() {
     	   given()
-    	       .queryParam("ativo", true)
+    	       .queryParam("ativo", false)
     	   .when()
 	       .get("/clientes")
 	   .then() 
 	       .statusCode(200)
     	   ;
+    }
+    
+    @Test
+    public void deveRetornar200AoBuscarClientesFalseComQuery() {
+    	    given()
+    	        .queryParam("ativo", false)
+    	    .when()
+    	        .get("/clientes")
+    	    .then()
+    	        .statusCode(200)
+    	        .body("message", equalTo("Operação realizada com sucesso"))
+    	    ;
     }
     
     @Test
@@ -152,7 +164,8 @@ public class ClientesTest extends BaseTest {
     	   .when()
     	       .get("/clientes")
     	   .then() 	   
-           .statusCode(200)   	
+           .statusCode(200) 
+           .body("message", equalTo("Operação realizada com sucesso"))
     	   ;
     }
     
