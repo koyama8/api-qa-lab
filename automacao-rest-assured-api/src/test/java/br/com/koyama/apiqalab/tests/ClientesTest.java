@@ -156,6 +156,20 @@ public class ClientesTest extends BaseTest {
     	   ;
     }
     
+    @Test
+    public void deveRetornar404AoBuscarClientesInexistentePorNomeComQueryParam() {
+    	   given()
+    	       .queryParam("nome", "Matheus")
+    	   .when()
+    	       .get("/clientes")
+    	   .then()
+    	       .statusCode(404)
+    	       .body("message", equalTo("Nenhum cliente encontrado para os filtros informados."))
+    	   ;
+    }
+
+    
+    
 
 	private ClientePayload clienteValido() {
 		ClientePayload body = new ClientePayload();

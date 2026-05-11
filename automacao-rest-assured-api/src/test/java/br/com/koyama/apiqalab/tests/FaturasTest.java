@@ -122,6 +122,18 @@ public class FaturasTest extends BaseTest {
 		;
 	}
 	
+	@Test
+	public void deveRetornar404AoBuscarCartaoInexistentePorIDComQueryParam() {
+		given()
+		    .queryParam("cliente_id", 5)
+		    
+		.when()
+		    .get("/faturas")
+		.then()
+		    .statusCode(404)
+		    .body("message", equalTo("Nenhuma fatura encontrada para os filtros informados."))
+		    ;
+	}
 
 	private FaturaPayload faturaPayload() {
 		FaturaPayload body = new FaturaPayload();

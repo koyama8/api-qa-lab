@@ -123,7 +123,17 @@ public class CartoesTest extends BaseTest {
     	    ;
     }
     
-    
+    @Test
+    public void deveRetornar404AoBuscarCartaoInexistentePorIDComQueryParam() {
+    	    given()
+    	        .queryParam("cliente_id", 5)
+    	    .when()    
+    	        .get("/cartoes") 
+    	    .then()
+    	        .statusCode(404)
+    	        .body("message", equalTo("Nenhum cartão encontrado para os filtros informados."))    
+    	    ;
+    }
     
     private CartaoPayload cartaoValido() {
     	CartaoPayload body = new CartaoPayload();

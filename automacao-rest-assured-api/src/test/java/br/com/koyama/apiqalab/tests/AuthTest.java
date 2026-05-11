@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import br.com.koyama.apiqalab.base.BaseTest;
 import br.com.koyama.apiqalab.payloads.LoginPayload;
+import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -60,6 +61,20 @@ public class AuthTest extends BaseTest {
 		   .statusCode(401)
 		   .body("message", equalTo("Usuário ou senha inválidos."))
 		 ;
+	}
+	
+	@Test
+	public void deveRetornar200NoLoginValidoComContentTypeEAcceptJson() {
+         given()
+            .contentType(ContentType.JSON)
+            .accept(ContentType.JSON)
+            .body(criarLoginValido())
+         .when()
+             .post("/login")
+         .then()
+             .statusCode(200)
+             .body("success", equalTo(true))
+         ;
 	}
 
 	
