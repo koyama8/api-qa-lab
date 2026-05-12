@@ -1,0 +1,15 @@
+meta {
+  name: Delay 1 Segundo
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/comportamento/delay
+  body: none
+  auth: none
+}
+
+params:query {
+  segundos: 1
+}

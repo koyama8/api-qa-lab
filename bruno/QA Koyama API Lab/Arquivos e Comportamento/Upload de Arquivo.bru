@@ -1,0 +1,15 @@
+meta {
+  name: Upload de Arquivo
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/arquivos/upload
+  body: multipart-form
+  auth: none
+}
+
+body:multipart-form {
+  arquivo: @../../../automacao-rest-assured-api/src/test/resources/payloads/upload-estudo.txt
+}
