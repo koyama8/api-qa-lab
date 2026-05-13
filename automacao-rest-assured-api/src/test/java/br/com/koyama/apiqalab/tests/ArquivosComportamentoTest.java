@@ -1,33 +1,125 @@
 package br.com.koyama.apiqalab.tests;
 
 import br.com.koyama.apiqalab.base.BaseTest;
+import io.restassured.response.Response;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.hamcrest.Matchers.lessThan;
+import java.io.File;
+
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class ArquivosComportamentoTest extends BaseTest {
 
     // Arquivos e comportamento avancado
 
-    // TODO: implementar teste POST /arquivos/upload retornando 200.
-    // Estudar multipart/form-data com multiPart("arquivo", arquivo).
-    // Arquivo sugerido: src/test/resources/payloads/upload-estudo.txt
+ 	@Test
+	public void deveRetornar200AoFazerUploadDeArquivo() {
+	    File arquivo = new File("src/test/resources/payloads/upload-estudo.txt");
 
-    // TODO: validar metadados retornados no upload.
-    // Exemplos: nome, content_type, tamanho_bytes, extensao e salvo.
+	    given()
+	        .contentType("multipart/form-data")
+	        .accept("application/json")
+	        .multiPart("arquivo", arquivo)
+	    .when()
+	        .post("/arquivos/upload")
+	    .then()
+	        .statusCode(200)
+	        .body("message", equalTo("Operação realizada com sucesso"))
+	        .body("data.nome", equalTo("upload-estudo.txt"))
+	        .body("data.tamanho_bytes", equalTo(103))
+	        .body("data.extensao", equalTo(".txt"))
+	        .body("data.salvo", equalTo(true));
+	}
 
-    // TODO: implementar teste GET /arquivos/download retornando 200.
-    // Estudar download com response.extract().asByteArray().
+	
+    @Test
+    public void deveRetornar200AoFazerDownloadDeArquivo() {
+    	Response response =
+    			given()
+    			    .accept("text/plain")
+    			.when()
+    			    .get("/arquivos/download")
+    			.then()
+    			    .statusCode(200)
+    			    .extract()
+    			    .response()
+    			    ;
+    			   
+        String body = response.asString();
+        
+        assertTrue(body.contains("Pay Lab - arquivo de estudo"));
+        assertTrue(body.contains("Este arquivo existe para praticar download"));
+        
+    }
 
-    // TODO: validar headers do download.
-    // Exemplos: Content-Type, Content-Disposition e Content-Length.
+    @Test
+    public void deveRetornar200AoBuscarMetadadosDoArquivo() {
+    	given()
+    	    .accept("application/json")
+    	.when()
+    	    .get("/arquivos/metadados")
+    	.then()
+    	    .statusCode(200)
+    	    .body("data.nome", equalTo("pay-lab-estudo.txt"))
+    	    .body("data.content_type", equalTo("text/plain"))
+    	    .body("data.tamanho_bytes", equalTo(146))
+    	    .body("data.extensao", equalTo(".txt"))
+    	    .body("data.sha256", equalTo("940beaf1ea4ae37cc05b7d967715a0b889b79314f204e817d45382b9029748b0"))
+    	    .body("data.download_url", equalTo("/arquivos/download"))
 
-    // TODO: implementar teste GET /arquivos/metadados retornando 200.
-    // Comparar nome, extensao, tamanho_bytes e sha256.
+    	;
+    }
+    
+    @Test
+    public void deveRetornar200DentroUmSegundo() {
+    	given()
+    	    .accept("application/json")
+    	    .queryParam("segundos", 1)
+    	.when()
+    	    .get("/comportamento/delay")
+    	.then()
+    	    .statusCode(200)
+    	    .time(lessThan(1200L))
+    	    .body("success", equalTo(true))
+    	    .body("data.delay_solicitado_segundos", equalTo(1.0F))
+    	;
+    }
 
-    // TODO: implementar teste GET /comportamento/delay?segundos=1 retornando 200.
-    // Estudar validacao de tempo de resposta com time(lessThan(...)).
-
-    // TODO: implementar cenario de tempo maximo esperado.
-    // Exemplo didatico: endpoint com delay pequeno deve responder dentro do limite definido.
-
-    // TODO: implementar cenario de timeout futuramente.
-    // Pesquisar config().httpClient().setParam(...) ou alternativas atuais do REST Assured.
+    @Test
+    public void deveRetornar200DentroDoTempoMaximoEsperado() {
+    	given()
+    	    .accept("application/json")
+    	    .queryParam("segundos", 1)
+    	.when()
+    	    .get("/comportamento/delay")
+    	.then()
+    	    .statusCode(200)
+    	    .time(lessThan(2000L))
+    	    .body("success", equalTo(true))
+    	    .body("message", equalTo("Operação realizada com sucesso"))
+    	    .body("data.delay_solicitado_segundos", equalTo(1.0F))
+    	;
+    }
+  
+    @Test
+    public void deveRetornar200DentroDoDelay() {
+    	given()
+            .accept("application/json")
+            .queryParam("segundos", 5)
+    	.when()
+    	    .get("/comportamento/delay")
+    	.then()
+    	    .statusCode(200)
+    	    .time(lessThan(6000L))
+    	    .body("success", equalTo(true))
+    	    .body("message", equalTo("Operação realizada com sucesso"))
+    	;
+    }
 }
