@@ -2,38 +2,163 @@ package br.com.koyama.apiqalab.tests;
 
 import br.com.koyama.apiqalab.base.BaseTest;
 
+import io.restassured.response.Response;
+import org.junit.jupiter.api.Test;
+import org.mozilla.javascript.ConsString;
+
+import com.sun.source.tree.AssertTree;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HtmlXPathTest extends BaseTest {
 
     // Topicos complementares: trabalhando com HTML e XPath com HTML
 
-    // TODO: implementar teste GET /html/estudo retornando 200.
-    // Validar Content-Type text/html.
+	
+    @Test
+	public void deveRetornar200EExtrairHtmlComoString() {
+		Response response =
+				given()
+				    .accept("text/html")		
+				.when()
+				    .get("/html/estudo")
+				.then() 
+				    .statusCode(200)
+				    .contentType(containsString("text/html"))
+				    .extract()
+				    .response()
+				;
+		
+		String hmtl = response.asString();
+		
+		assertTrue(hmtl.contains("Pay Lab HTML"));
+		assertTrue(hmtl.contains("Resumo de estudos"));
+	}
+    
+    @Test
+    public void deveValidarConteudosEsperadosDoHtml() {
+    	Response response =
+    			given()
+    			    .accept("text/html")
+    			.when()
+    			    .get("/html/estudo")
+    			.then() 
+    			    .statusCode(200)
+    		        .contentType(containsString("text/html"))	
+    		        .extract()
+    		        .response()
+    			;
+    	
+    	String hmtl = response.asString();
+        
+    	assertTrue(hmtl.contains("Pay Lab HTML"));
+    	assertTrue(hmtl.contains("Resumo de estudos"));
+    	assertTrue(hmtl.contains("XPath com HTML"));
 
-    // TODO: extrair o corpo da resposta como String.
-    // Exemplo de estudo: response.extract().asString().
+    }
 
-    // TODO: validar que o HTML contem titulo, h1 e textos esperados.
-    // Exemplos: Pay Lab HTML, Resumo de estudos, XPath com HTML.
+    @Test
+    public void deveValidarTabelaDoHtml() {
+    	Response response =
+    			given()
+    			    .accept("text/html")
+    		    .when()	
+    		        .get("/html/estudo")
+    		    .then()
+    		        .statusCode(200)
+    		        .contentType(containsString("text/html"))
+    		        .extract()
+    		        .response()
+    			;
+    	
+    	String html = response.asString();
+    	
+    	assertTrue(html.contains("Trabalhando com HTML"));
+    	assertTrue(html.contains("XPath com HTML"));
+    }
 
-    // TODO: implementar teste GET /html/clientes retornando 200.
-    // Validar que a pagina contem uma tabela com id tabela-clientes.
+    @Test
+    public void deveEstudarXpathPorIdNoHtml() {
+    	Response response =
+    			given()
+    			    .accept("text/html")
+    			.when()
+    			    .get("/html/clientes")
+    			.then()
+    			    .statusCode(200)
+    			    .contentType(containsString("text/html"))
+    			    .extract()
+    			    .response()
+    			;
+    	
+    	String html = response.asString();
+    			
+    	assertTrue(html.contains("id=\"titulo-clientes\""));
+    	assertTrue(html.contains("id=\"tabela-clientes\""));
+    }
 
-    // TODO: estudar XPath para localizar elementos por id.
-    // Exemplos de XPath para pesquisar:
-    // //*[@id='titulo-principal']
-    // //*[@id='tabela-clientes']
+    @Test
+    public void deveEstudarXpathPorTextoNoHtmlClientes() {
+    	Response response = 
+    			given()
+    			    .accept("text/html")
+    			.when()
+    			    .get("/html/clientes")
+    			.then()
+    			    .statusCode(200)
+    			    .contentType(containsString("text/html"))
+    			    .extract()
+    			    .response()
+    			;
+    
+    	String html = response.asString();
+    	
+    	assertTrue(html.contains("Clientes para XPath"));
+    	assertTrue(html.contains("Cliente Pay Lab"));
+    	assertTrue(html.contains("Ana Silva"));
+    }
 
-    // TODO: estudar XPath para localizar elementos por texto.
-    // Exemplos de XPath para pesquisar:
-    // //td[text()='Cliente Pay Lab']
-    // //li[text()='XPath com HTML']
+    @Test
+    public void deveEstudarXpathPorAtributoNoHtmlClientes() {
+    	Response response =
+    			given()
+    			    .accept("text/html")
+    			.when()
+    			    .get("/html/clientes")
+    			.then()
+    			    .statusCode(200)
+    			    .contentType(containsString("text/html"))
+    	            .extract()
+    	            .response()
+    			;
+    	
+    	String html = response.asString();
+    	
+    	assertTrue(html.contains("data-cliente-id=\"1\""));
+    	assertTrue(html.contains("data-status=\"ATIVO\""));
 
-    // TODO: estudar XPath para localizar elementos por atributo.
-    // Exemplos de XPath para pesquisar:
-    // //tr[@data-cliente-id='1']
-    // //li[@data-tipo='xpath']
+    }
 
-    // TODO: estudar XPath para localizar elementos por posicao.
-    // Exemplo de XPath para pesquisar:
-    // //table[@id='tabela-clientes']/tbody/tr[1]/td[2]
+    @Test
+    public void deveValidarConteudosDaPrimeiraLinhaParaEstudoDeXpathPorPosicao() {
+    	Response response = 
+    			given()
+    			    .accept("text/html")    		
+    			.when()
+    			    .get("/html/clientes")
+    			.then()
+    			    .statusCode(200)
+    			    .contentType(containsString("text/html"))
+    			    .extract()
+    			    .response()
+    			    ;
+    	String html = response.asString();
+    	
+    	assertTrue(html.contains("id=\"corpo-tabela-clientes\""));
+    	assertTrue(html.contains("id=\"cliente-1-id\""));
+    	assertTrue(html.contains("Cliente Pay Lab"));
+    	assertTrue(html.contains("cliente@email.com"));
+    	assertTrue(html.contains("ATIVO"));    	
+    }
 }
