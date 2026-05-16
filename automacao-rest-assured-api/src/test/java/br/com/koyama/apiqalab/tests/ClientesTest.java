@@ -1,5 +1,6 @@
 package br.com.koyama.apiqalab.tests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.koyama.apiqalab.base.BaseTest;
@@ -10,6 +11,11 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ClientesTest extends BaseTest {
+
+    @BeforeEach
+    public void resetarDados() {
+        ResetUtils.resetarMassaDeDados();
+    }
 
 	@Test
 	public void deveRetornar200AoBuscarClientes() {
@@ -32,7 +38,7 @@ public class ClientesTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404ClienteInexistente() {
+	public void deveRetornar404AoBuscarClienteInexistente() {
 		given()
 		 .when()
 		   .get("/clientes/999")
@@ -53,7 +59,7 @@ public class ClientesTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar400EmailInvalido() {
+	public void deveRetornar400AoCadastrarClienteComEmailInvalido() {
 		ClientePayload body = new ClientePayload();
 		body.setNome("Cliente Pay Lab");
 		body.setEmail("matheus");
@@ -70,7 +76,7 @@ public class ClientesTest extends BaseTest {
 	}
 	
     @Test
-	public void deveRetornar400CPFInvalido() {
+	public void deveRetornar400AoCadastrarClienteComCpfInvalido() {
 		ClientePayload body = new ClientePayload();
 		body.setNome("Cliente Pay Lab");
 		body.setEmail("matheus@email.com");
@@ -115,8 +121,7 @@ public class ClientesTest extends BaseTest {
     
     @Test
     public void deveRetornar204AoDeletarClienteValido() {
-      ResetUtils.resetarMassaDeDados();
-    	  given()
+          given()
     	   .when()
     	     .delete("/clientes/1")
     	   .then() 
@@ -135,7 +140,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarClientesAtivosComQueryParam() {
+    public void deveRetornar200AoBuscarClientesInativosComQueryParam() {
     	   given()
     	       .queryParam("ativo", false)
     	   .when()
@@ -146,7 +151,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarClientesFalseComQuery() {
+    public void deveRetornarMensagemAoBuscarClientesInativosComQueryParam() {
     	    given()
     	        .queryParam("ativo", false)
     	    .when()

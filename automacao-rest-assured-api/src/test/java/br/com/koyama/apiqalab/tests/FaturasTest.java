@@ -9,9 +9,15 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FaturasTest extends BaseTest {
+
+    @BeforeEach
+    public void resetarDados() {
+        ResetUtils.resetarMassaDeDados();
+    }
 
 	@Test
 	public void deveRetornar200AoListarFatura() {
@@ -24,27 +30,27 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar200FaturaPorID() {
+	public void deveRetornar200AoBuscarFaturaPorId() {
 		given()
 		 .when()
-		     .get("/faturas/5")
+		     .get("/faturas/1")
 		 .then()
 		     .statusCode(200)
 		;
 	}
 	
 	@Test
-	public void deveRetornar404FaturaNaoEncontrada() {
+	public void deveRetornar404AoBuscarFaturaNaoEncontrada() {
 		given()
 		 .when()
-		     .get("/faturas/5")
+		     .get("/faturas/999")
 		 .then() 
 		     .statusCode(404)
 		;
 	}
 	
 	@Test
-	public void deveRetornar200CriarFatura() {
+	public void deveRetornar201AoCriarFatura() {
 		given()
 		 .body(faturaPayload())
 		.when()
@@ -55,29 +61,29 @@ public class FaturasTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar200AtualizarFatura() {
+	public void deveRetornar200AoAtualizarFatura() {
 		given()
 		  .body(atualizarFatura())
 	    .when()
-		     .put("/faturas/4")
+		     .put("/faturas/1")
 		.then() 
 		     .statusCode(200)
 		;
 	}
 	
 	@Test
-	public void deveRetornar200AtualizarValorFatura() {
+	public void deveRetornar200AoAtualizarValorDaFatura() {
 		given()
 		  .body(atualizarValorFatura())
 		.when()
-           .put("/faturas/4")
+           .put("/faturas/1")
         .then() 
            .statusCode(200)
 		;
 	}
 	
 	@Test
-	public void deveRetornar204DeletarFatura() {
+	public void deveRetornar204AoDeletarFatura() {
 		given()
 		 .when() 
 		     .delete("/faturas/2")
@@ -87,10 +93,10 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404DeleteFaturaNaoEncontrada() {
+	public void deveRetornar404AoDeletarFaturaNaoEncontrada() {
 		given()
 		 .when()
-		     .delete("/faturas/2")
+		     .delete("/faturas/999")
 		 .then()
 		     .statusCode(404)
 		     .body("message", equalTo("Fatura não encontrada."))
@@ -123,7 +129,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404AoBuscarCartaoInexistentePorIDComQueryParam() {
+	public void deveRetornar404AoBuscarFaturasInexistentesPorClienteComQueryParam() {
 		given()
 		    .queryParam("cliente_id", 5)
 		    

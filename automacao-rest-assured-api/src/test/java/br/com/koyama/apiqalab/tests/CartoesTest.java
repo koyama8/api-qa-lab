@@ -2,15 +2,22 @@ package br.com.koyama.apiqalab.tests;
 
 import br.com.koyama.apiqalab.base.BaseTest;
 import br.com.koyama.apiqalab.payloads.CartaoPayload;
+import br.com.koyama.apiqalab.utils.ResetUtils;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CartoesTest extends BaseTest {
+
+    @BeforeEach
+    public void resetarDados() {
+        ResetUtils.resetarMassaDeDados();
+    }
 
 	@Test
 	public void deveRetornar200AoBuscarCartoes() {
@@ -44,7 +51,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar201CartaoValido() {
+    public void deveRetornar201AoCadastrarCartaoValido() {
         given()
          .body(cartaoValido())
         .when()
@@ -57,7 +64,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200CartaoBloqueado() {
+    public void deveRetornar200AoBloquearCartao() {
     	given()
     	 .when()
     	     .put("/cartoes/1/bloquear")
@@ -68,10 +75,10 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200DesbloquearCartao() {
+    public void deveRetornar200AoDesbloquearCartao() {
     	given()
     	  .when()
-    	     .put("/cartoes/1/desbloquear")
+             .put("/cartoes/2/desbloquear")
     	  .then()
     	     .statusCode(200)
     	     .body("message", equalTo("Operação realizada com sucesso"))
@@ -80,7 +87,7 @@ public class CartoesTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar200CartaoCancelado() {
+    public void deveRetornar200AoCancelarCartao() {
     	given()
     	  .when()
     	     .put("/cartoes/1/cancelar")
@@ -91,7 +98,7 @@ public class CartoesTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar409CartaoCanceladoNaoPodeSerRetornado() {
+    public void deveRetornar409AoBloquearCartaoCancelado() {
     	given()
     	  .when()
     	     .put("/cartoes/3/bloquear")
@@ -115,7 +122,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarCartoesBloqueadoComQueryParam() {
+    public void deveRetornar200AoBuscarCartoesBloqueadosComQueryParam() {
     	   given()
     	       .queryParam("status", "BLOQUEADO")
     	   .when()
@@ -129,11 +136,12 @@ public class CartoesTest extends BaseTest {
     @Test
     public void deveRetornar200AoBuscarCartoesDoClienteComQueryParam() {
     	    given()
-    	        .queryParam("cliente_id", 4)
+                .queryParam("cliente_id", 1)
     	    .when()
     	        .get("/cartoes")
     	    .then()
     	        .statusCode(200)
+                .body("success", equalTo(true))
     	    ;
     }
         
@@ -151,7 +159,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar404AoBuscarCartaoInexistentePorIDComQueryParam() {
+    public void deveRetornar404AoBuscarCartoesInexistentesPorClienteComQueryParam() {
     	    given()
     	        .queryParam("cliente_id", 5)
     	    .when()    
