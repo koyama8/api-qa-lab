@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 import java.math.BigDecimal;
 
-import org.hamcrest.number.BigDecimalCloseTo;
 import org.junit.jupiter.api.Test;
 
 public class CartoesTest extends BaseTest {

@@ -15,11 +15,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SerializacaoDesserializacaoTest extends BaseTest {
 
-    // TODO: implementar teste POST /serializacao/json/map serializando Map para JSON
-    // TODO: validar status 200, success=true e data.tipo=MAP_JSON
-    // TODO: validar que os campos enviados no Map voltam em data.recebido	
-	@Test
-	public void deveSerializarMapParaJsonComSucesso() {
+		@Test
+		public void deveSerializarMapParaJsonComSucesso() {
 		Map<String, Object> body = new HashMap<>();
 	    body.put("origem", "bruno");
 		body.put("ativo", true);
@@ -38,11 +35,8 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 		;
 	}
 
-    // TODO: implementar teste POST /serializacao/json/cliente serializando objeto ClientePayload para JSON
-    // TODO: validar status 200, success=true e data.tipo=OBJETO_JSON
-    // TODO: validar nome, email e cpf retornados no body
-	@Test
-	public void deveSerializarObjetoJavaParaJsonComSucesso() {
+		@Test
+		public void deveSerializarObjetoJavaParaJsonComSucesso() {
 		ClienteResponse body = new ClienteResponse();
 		body.setNome("Cliente Serializacao");
 		body.setEmail("serializacao@email.com");
@@ -61,11 +55,8 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 		;
 	}
 
-    // TODO: implementar teste GET /serializacao/json/cliente desserializando resposta JSON para objeto Java
-    // TODO: criar uma classe de resposta futuramente, se quiser praticar response.as(...)
-    // TODO: comparar campos do objeto desserializado com os valores esperados
-	@Test
-	public void deveDesserializarJsonParaObjetoJava() {
+		@Test
+		public void deveDesserializarJsonParaObjetoJava() {
 	    ClienteResponse cliente =
 	        given()
 	        .when()
@@ -84,11 +75,8 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 	    assertEquals(true, cliente.getAtivo());
 	}
 	
-    // TODO: implementar teste POST /serializacao/xml/cliente serializando XML
-    // TODO: enviar body XML com Content-Type application/xml
-    // TODO: validar status 200 e Content-Type application/xml
-    @Test
-	public void deveSerializarXmlClienteComSucesso() {
+	    @Test
+		public void deveSerializarXmlClienteComSucesso() {
 		String bodyXML = """
 				<cliente>
                   <nome>Cliente XML</nome>
@@ -109,10 +97,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 		   ;
 	}
 	
-    // TODO: implementar teste GET /serializacao/xml/cliente desserializando resposta XML
-    // TODO: ler XML com XmlPath ou response.asString()
-    // TODO: validar tags id, nome, email, cpf e ativo
-     @Test
+	     @Test
      public void deveDesserializarXmlCliente() {
     	    String responseXml = 
     	    		given()

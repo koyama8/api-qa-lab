@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class HeadersTest extends BaseTest {
 
-    // TODO: implementar teste GET /headers com headers validos retornando 200
 	@Test
 	public void deveRetornar200ComHeadersValidos() {
         given()
@@ -27,7 +26,6 @@ public class HeadersTest extends BaseTest {
         ;
 	}
 	
-    // TODO: implementar teste GET /headers com x-api-version invalido retornando 400
 	@Test
 	public void deveRetornar400QuandoVersaoHeaderForInvalida() {
 	    given()

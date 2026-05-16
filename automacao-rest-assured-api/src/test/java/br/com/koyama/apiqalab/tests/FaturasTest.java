@@ -155,12 +155,6 @@ public class FaturasTest extends BaseTest {
 		return body;
 	}
 	
-	private FaturaPayload atualizarCartaoFatura() {
-		FaturaPayload body = new FaturaPayload();
-		body.setCartaoId(5);
-		return body;
-	}
-	
 	private FaturaPayload atualizarValorFatura() {
 		FaturaPayload body = new FaturaPayload();
 		body.setValor(new BigDecimal(8000));

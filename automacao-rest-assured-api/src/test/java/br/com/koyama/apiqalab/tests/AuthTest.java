@@ -9,9 +9,6 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class AuthTest extends BaseTest {
 
 	
@@ -79,7 +76,7 @@ public class AuthTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar401NoLoginInvalidoValidoComContentTypeEAcceptJson() {
+	public void deveRetornar401NoLoginInvalidoComContentTypeEAcceptJson() {
 		given()
 		    .contentType(ContentType.JSON)
 		    .accept(ContentType.JSON)

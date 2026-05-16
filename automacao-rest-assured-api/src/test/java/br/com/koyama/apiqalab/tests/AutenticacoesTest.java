@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 
 public class AutenticacoesTest extends BaseTest {
 
-
-    // TODO: implementar teste GET /auth/publica retornando 200 sem autenticacao.
 	@Test
 	public void deveRetornar200AoAcessarApiPublica() {
 		given()
@@ -23,7 +21,6 @@ public class AutenticacoesTest extends BaseTest {
 	 ;
 	}
 
-    // TODO: implementar teste GET /auth/api-key retornando 200 com header x-api-key valido.
     @Test
 	public void deveRetornar200ComApiKeyValida() {
 	    given()
@@ -61,8 +58,6 @@ public class AutenticacoesTest extends BaseTest {
     	;
     }
     
-
-    // TODO: implementar teste GET /auth/basic retornando 200 com Basic Auth valido.
     @Test
     public void deveRetornar200ComBasicAuthValido() {
     	given()
@@ -74,7 +69,6 @@ public class AutenticacoesTest extends BaseTest {
     	;
     }
     
-    // TODO: implementar teste GET /auth/basic retornando 401 com Basic Auth invalido.
     @Test
     public void deveRetornar401ComBasicAuthInvalido() {
     	given()
@@ -87,7 +81,6 @@ public class AutenticacoesTest extends BaseTest {
     	   
     	;
     }
-    // TODO: implementar teste GET /auth/bearer retornando 200 com Bearer Token valido.
     @Test
     public void deveRetornar200ComBearerTokenValido() {
     	given()
@@ -100,7 +93,6 @@ public class AutenticacoesTest extends BaseTest {
     	   .body("data.tipo", equalTo("BEARER"))
     	;
     }
-    // TODO: implementar teste GET /auth/bearer retornando 401 sem Bearer Token.
     @Test
     public void deveRetornar401ComBearerTokenAusente() {
     	given()
@@ -111,7 +103,6 @@ public class AutenticacoesTest extends BaseTest {
     	    .body("message", equalTo("Bearer Token ausente ou invalido."))
     	;
     }
-    // TODO: implementar teste GET /auth/bearer retornando 401 com Bearer Token invalido.
     @Test
     public void deveRetornar401ComBearerTokenInvalido() {
     	given()

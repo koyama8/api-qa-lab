@@ -4,9 +4,6 @@ import br.com.koyama.apiqalab.base.BaseTest;
 
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import org.mozilla.javascript.ConsString;
-
-import com.sun.source.tree.AssertTree;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
@@ -29,11 +26,11 @@ public class HtmlXPathTest extends BaseTest {
 				    .extract()
 				    .response()
 				;
-		
-		String hmtl = response.asString();
-		
-		assertTrue(hmtl.contains("Pay Lab HTML"));
-		assertTrue(hmtl.contains("Resumo de estudos"));
+
+			String html = response.asString();
+
+			assertTrue(html.contains("Pay Lab HTML"));
+			assertTrue(html.contains("Resumo de estudos"));
 	}
     
     @Test
@@ -50,11 +47,11 @@ public class HtmlXPathTest extends BaseTest {
     		        .response()
     			;
     	
-    	String hmtl = response.asString();
-        
-    	assertTrue(hmtl.contains("Pay Lab HTML"));
-    	assertTrue(hmtl.contains("Resumo de estudos"));
-    	assertTrue(hmtl.contains("XPath com HTML"));
+        String html = response.asString();
+
+        assertTrue(html.contains("Pay Lab HTML"));
+        assertTrue(html.contains("Resumo de estudos"));
+        assertTrue(html.contains("XPath com HTML"));
 
     }
 

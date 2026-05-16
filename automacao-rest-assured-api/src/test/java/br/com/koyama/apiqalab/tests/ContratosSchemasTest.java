@@ -12,33 +12,28 @@ import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 public class ContratosSchemasTest extends BaseTest {
 
-    
-    // TODO: implementar validacao de schema JSON no endpoint GET /contratos/json/health.
-    @Test
-	public void deveValidarContratoJsonDoHealth() {
-		given()
-        .when()
-            .get("http://127.0.0.1:8000/contratos/json/health")
+	    @Test
+		public void deveValidarContratoJsonDoHealth() {
+			given()
+	        .when()
+	            .get("/contratos/json/health")
         .then()
             .statusCode(200)
             .body("data.status", equalTo("UP"))
             .body(matchesJsonSchemaInClasspath("schemas/health.schema.json"))
 		;
 	}
-
-    // TODO: implementar validacao de schema JSON no endpoint GET /contratos/json/cliente.
     @Test
     public void deveValidarContratoJsonDoCliente() {
-    	    given()
-    	    .when()
-            .get("http://127.0.0.1:8000/contratos/json/cliente")   
+        given()
+        .when()
+            .get("/contratos/json/cliente")
         .then()
             .statusCode(200)
             .body(matchesJsonSchemaInClasspath("schemas/cliente.schema.json"))
     	    ;
     }
-    // TODO: implementar validacao de schema XML no endpoint GET /contratos/xml/cliente.
-    @Test
+	    @Test
     public void deveValidarXML() {
     	   given()
     	   .when()

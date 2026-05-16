@@ -12,9 +12,6 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-
 public class ArquivosComportamentoTest extends BaseTest {
 
     // Arquivos e comportamento avancado
@@ -78,7 +75,7 @@ public class ArquivosComportamentoTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200DentroUmSegundo() {
+    public void deveRetornar200DentroDeUmSegundo() {
     	given()
     	    .accept("application/json")
     	    .queryParam("segundos", 1)
