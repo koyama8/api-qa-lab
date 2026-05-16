@@ -10,10 +10,10 @@ import static org.hamcrest.Matchers.equalTo;
 import static io.restassured.matcher.RestAssuredMatchers.matchesXsdInClasspath;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-public class ContratosSchemasTest extends BaseTest {
+class ContratosSchemasTest extends BaseTest {
 
 	    @Test
-		public void deveValidarContratoJsonDoHealth() {
+		void deveValidarContratoJsonDoHealth() {
 			given()
 	        .when()
 	            .get("/contratos/json/health")
@@ -24,7 +24,7 @@ public class ContratosSchemasTest extends BaseTest {
 		;
 	}
     @Test
-    public void deveValidarContratoJsonDoCliente() {
+    void deveValidarContratoJsonDoCliente() {
         given()
         .when()
             .get("/contratos/json/cliente")
@@ -34,7 +34,7 @@ public class ContratosSchemasTest extends BaseTest {
     	    ;
     }
 	    @Test
-    public void deveValidarXML() {
+    void deveValidarXML() {
     	   given()
     	   .when()
     	       .get("contratos/xml/cliente")
@@ -45,7 +45,7 @@ public class ContratosSchemasTest extends BaseTest {
     }
     
     @Test
-    public void deveValidarFuncional() {
+    void deveValidarFuncional() {
     	given()
     	.when()
     	    .get("/contratos/diferenca")

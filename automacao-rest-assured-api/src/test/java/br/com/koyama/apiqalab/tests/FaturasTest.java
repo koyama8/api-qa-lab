@@ -12,15 +12,15 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FaturasTest extends BaseTest {
+class FaturasTest extends BaseTest {
 
     @BeforeEach
-    public void resetarDados() {
+    void resetarDados() {
         ResetUtils.resetarMassaDeDados();
     }
 
 	@Test
-	public void deveRetornar200AoListarFatura() {
+	void deveRetornar200AoListarFatura() {
 		given()
 		 .when()
 		     .get("/faturas")
@@ -30,7 +30,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar200AoBuscarFaturaPorId() {
+	void deveRetornar200AoBuscarFaturaPorId() {
 		given()
 		 .when()
 		     .get("/faturas/1")
@@ -40,7 +40,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404AoBuscarFaturaNaoEncontrada() {
+	void deveRetornar404AoBuscarFaturaNaoEncontrada() {
 		given()
 		 .when()
 		     .get("/faturas/999")
@@ -50,7 +50,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar201AoCriarFatura() {
+	void deveRetornar201AoCriarFatura() {
 		given()
 		 .body(faturaPayload())
 		.when()
@@ -61,7 +61,7 @@ public class FaturasTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar200AoAtualizarFatura() {
+	void deveRetornar200AoAtualizarFatura() {
 		given()
 		  .body(atualizarFatura())
 	    .when()
@@ -72,7 +72,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar200AoAtualizarValorDaFatura() {
+	void deveRetornar200AoAtualizarValorDaFatura() {
 		given()
 		  .body(atualizarValorFatura())
 		.when()
@@ -83,7 +83,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar204AoDeletarFatura() {
+	void deveRetornar204AoDeletarFatura() {
 		given()
 		 .when() 
 		     .delete("/faturas/2")
@@ -93,7 +93,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404AoDeletarFaturaNaoEncontrada() {
+	void deveRetornar404AoDeletarFaturaNaoEncontrada() {
 		given()
 		 .when()
 		     .delete("/faturas/999")
@@ -104,7 +104,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar200AoBuscarFaturasPorStatusComQueryParam() {
+	void deveRetornar200AoBuscarFaturasPorStatusComQueryParam() {
 		given()
 		    .queryParam("status", "ABERTA")
 		.when()
@@ -115,7 +115,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar200AoBuscarFaturasPorClienteECartaoComQueryParam() {
+	void deveRetornar200AoBuscarFaturasPorClienteECartaoComQueryParam() {
 		given()
 		    .queryParam("cliente_id", 1)
 		    .queryParam("cartao_id", 1)
@@ -129,7 +129,7 @@ public class FaturasTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404AoBuscarFaturasInexistentesPorClienteComQueryParam() {
+	void deveRetornar404AoBuscarFaturasInexistentesPorClienteComQueryParam() {
 		given()
 		    .queryParam("cliente_id", 5)
 		    

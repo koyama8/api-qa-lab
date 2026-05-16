@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-public class HtmlXPathTest extends BaseTest {
+class HtmlXPathTest extends BaseTest {
 
     // Topicos complementares: trabalhando com HTML e XPath com HTML
 
 	
     @Test
-	public void deveRetornar200EExtrairHtmlComoString() {
+	void deveRetornar200EExtrairHtmlComoString() {
 		Response response =
 				given()
 				    .accept("text/html")		
@@ -34,7 +34,7 @@ public class HtmlXPathTest extends BaseTest {
 	}
     
     @Test
-    public void deveValidarConteudosEsperadosDoHtml() {
+    void deveValidarConteudosEsperadosDoHtml() {
     	Response response =
     			given()
     			    .accept("text/html")
@@ -56,7 +56,7 @@ public class HtmlXPathTest extends BaseTest {
     }
 
     @Test
-    public void deveValidarTabelaDoHtml() {
+    void deveValidarTabelaDoHtml() {
     	Response response =
     			given()
     			    .accept("text/html")
@@ -76,7 +76,7 @@ public class HtmlXPathTest extends BaseTest {
     }
 
     @Test
-    public void deveEstudarXpathPorIdNoHtml() {
+    void deveEstudarXpathPorIdNoHtml() {
     	Response response =
     			given()
     			    .accept("text/html")
@@ -96,7 +96,7 @@ public class HtmlXPathTest extends BaseTest {
     }
 
     @Test
-    public void deveEstudarXpathPorTextoNoHtmlClientes() {
+    void deveEstudarXpathPorTextoNoHtmlClientes() {
     	Response response = 
     			given()
     			    .accept("text/html")
@@ -117,7 +117,7 @@ public class HtmlXPathTest extends BaseTest {
     }
 
     @Test
-    public void deveEstudarXpathPorAtributoNoHtmlClientes() {
+    void deveEstudarXpathPorAtributoNoHtmlClientes() {
     	Response response =
     			given()
     			    .accept("text/html")
@@ -138,7 +138,7 @@ public class HtmlXPathTest extends BaseTest {
     }
 
     @Test
-    public void deveValidarConteudosDaPrimeiraLinhaParaEstudoDeXpathPorPosicao() {
+    void deveValidarConteudosDaPrimeiraLinhaParaEstudoDeXpathPorPosicao() {
     	Response response = 
     			given()
     			    .accept("text/html")    		

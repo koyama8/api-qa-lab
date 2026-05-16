@@ -9,11 +9,11 @@ import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class AuthTest extends BaseTest {
+class AuthTest extends BaseTest {
 
-	
+
 	@Test
-	public void deveRetornar200NoLoginValido() {		
+	void deveRetornar200NoLoginValido() {
 		given()
 		  .body(criarLoginValido())
 		.when()
@@ -22,9 +22,9 @@ public class AuthTest extends BaseTest {
 		  .statusCode(200)
 		;
 	}
-	
+
 	@Test
-	public void deveRetornarTokenNoLoginValido() {	    
+	void deveRetornarTokenNoLoginValido() {
 	    given()
 	      .body(criarLoginValido())
 	    .when()
@@ -34,22 +34,22 @@ public class AuthTest extends BaseTest {
 	      .body("data.token", equalTo("fake-token-qa-lab-123456"))
 	    ;
 	}
-	
-	
+
+
 	@Test
-	public void deveRetornar401NoLoginInvalido() {    
+	void deveRetornar401NoLoginInvalido() {
 		given()
 		  .body(criarLoginInvalido())
 		.when()
 		  .post("/login")
 		.then()
-		  .statusCode(401) 
+		  .statusCode(401)
 		;
 	}
-	
-	
+
+
 	@Test
-	public void deveRetornarMensagemNoLoginInvalido() {	 
+	void deveRetornarMensagemNoLoginInvalido() {
 		 given()
 		   .body(criarLoginInvalido())
 		 .when()
@@ -59,9 +59,9 @@ public class AuthTest extends BaseTest {
 		   .body("message", equalTo("Usuário ou senha inválidos."))
 		 ;
 	}
-	
+
 	@Test
-	public void deveRetornar200NoLoginValidoComContentTypeEAcceptJson() {
+	void deveRetornar200NoLoginValidoComContentTypeEAcceptJson() {
          given()
             .contentType(ContentType.JSON)
             .accept(ContentType.JSON)
@@ -74,31 +74,31 @@ public class AuthTest extends BaseTest {
              .body("data.token", equalTo("fake-token-qa-lab-123456"))
          ;
 	}
-	
+
 	@Test
-	public void deveRetornar401NoLoginInvalidoComContentTypeEAcceptJson() {
+	void deveRetornar401NoLoginInvalidoComContentTypeEAcceptJson() {
 		given()
 		    .contentType(ContentType.JSON)
 		    .accept(ContentType.JSON)
 		    .body(criarLoginInvalido())
 		.when()
 		    .post("/login")
-		.then()   
+		.then()
 		    .statusCode(401)
 		    .body("message", equalTo("Usuário ou senha inválidos."))
 		;
 	}
-	
 
-	
-	
+
+
+
 	private LoginPayload criarLoginValido() {
       LoginPayload body = new LoginPayload();
       body.setUsuario("admin");
       body.setSenha("123456");
       return body;
 	}
-	
+
 	private LoginPayload criarLoginInvalido() {
       LoginPayload body = new LoginPayload();
       body.setUsuario("admin");

@@ -10,15 +10,15 @@ import br.com.koyama.apiqalab.utils.ResetUtils;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class ClientesTest extends BaseTest {
+class ClientesTest extends BaseTest {
 
     @BeforeEach
-    public void resetarDados() {
+    void resetarDados() {
         ResetUtils.resetarMassaDeDados();
     }
 
 	@Test
-	public void deveRetornar200AoBuscarClientes() {
+	void deveRetornar200AoBuscarClientes() {
 		given()
 		 .when()
 		  .get("/clientes")
@@ -28,7 +28,7 @@ public class ClientesTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar200AoBuscarClienteExistente() {
+	void deveRetornar200AoBuscarClienteExistente() {
 		given()
 		 .when()
 		  .get("/clientes/1")
@@ -38,7 +38,7 @@ public class ClientesTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar404AoBuscarClienteInexistente() {
+	void deveRetornar404AoBuscarClienteInexistente() {
 		given()
 		 .when()
 		   .get("/clientes/999")
@@ -48,7 +48,7 @@ public class ClientesTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar201AoCadastrarClienteValido() {
+	void deveRetornar201AoCadastrarClienteValido() {
 		given()
 		   .body(clienteValido())
 		 .when()
@@ -59,7 +59,7 @@ public class ClientesTest extends BaseTest {
 	}
 
 	@Test
-	public void deveRetornar400AoCadastrarClienteComEmailInvalido() {
+	void deveRetornar400AoCadastrarClienteComEmailInvalido() {
 		ClientePayload body = new ClientePayload();
 		body.setNome("Cliente Pay Lab");
 		body.setEmail("matheus");
@@ -76,7 +76,7 @@ public class ClientesTest extends BaseTest {
 	}
 	
     @Test
-	public void deveRetornar400AoCadastrarClienteComCpfInvalido() {
+	void deveRetornar400AoCadastrarClienteComCpfInvalido() {
 		ClientePayload body = new ClientePayload();
 		body.setNome("Cliente Pay Lab");
 		body.setEmail("matheus@email.com");
@@ -93,7 +93,7 @@ public class ClientesTest extends BaseTest {
 	}
 
     @Test
-	public void deveRetornar200AoAtualizarClienteValido() {
+	void deveRetornar200AoAtualizarClienteValido() {
 
 	    ClientePayload body = new ClientePayload();
 	    body.setNome("Cliente Atualizado");
@@ -109,7 +109,7 @@ public class ClientesTest extends BaseTest {
 	}
 
     @Test
-	public void deveRetornar404AoDeletarClienteNaoEncontrado() {
+	void deveRetornar404AoDeletarClienteNaoEncontrado() {
 		given()
 		 .when()
 		   .delete("/clientes/4")
@@ -120,7 +120,7 @@ public class ClientesTest extends BaseTest {
 	}
     
     @Test
-    public void deveRetornar204AoDeletarClienteValido() {
+    void deveRetornar204AoDeletarClienteValido() {
           given()
     	   .when()
     	     .delete("/clientes/1")
@@ -130,7 +130,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarClienteExistenteComPathParam() {
+    void deveRetornar200AoBuscarClienteExistenteComPathParam() {
         given()
             .pathParam("clienteId", 1)
         .when()
@@ -140,7 +140,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarClientesInativosComQueryParam() {
+    void deveRetornar200AoBuscarClientesInativosComQueryParam() {
     	   given()
     	       .queryParam("ativo", false)
     	   .when()
@@ -151,7 +151,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornarMensagemAoBuscarClientesInativosComQueryParam() {
+    void deveRetornarMensagemAoBuscarClientesInativosComQueryParam() {
     	    given()
     	        .queryParam("ativo", false)
     	    .when()
@@ -163,7 +163,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarClientesPorNomeComQueryParam() {
+    void deveRetornar200AoBuscarClientesPorNomeComQueryParam() {
     	   given()
     	       .queryParam("nome", "Ana")
     	   .when()
@@ -175,7 +175,7 @@ public class ClientesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar404AoBuscarClientesInexistentePorNomeComQueryParam() {
+    void deveRetornar404AoBuscarClientesInexistentePorNomeComQueryParam() {
     	   given()
     	       .queryParam("nome", "Matheus")
     	   .when()

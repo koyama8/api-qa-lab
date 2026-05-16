@@ -12,15 +12,15 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CartoesTest extends BaseTest {
+class CartoesTest extends BaseTest {
 
     @BeforeEach
-    public void resetarDados() {
+    void resetarDados() {
         ResetUtils.resetarMassaDeDados();
     }
 
 	@Test
-	public void deveRetornar200AoBuscarCartoes() {
+	void deveRetornar200AoBuscarCartoes() {
 		given()
 		 .when()
 		     .get("/cartoes")
@@ -30,7 +30,7 @@ public class CartoesTest extends BaseTest {
 	}
 	
     @Test
-	public void deveRetornar200AoBuscarCartaoExistente() {
+	void deveRetornar200AoBuscarCartaoExistente() {
 		given()
 		 .when()
 		     .get("/cartoes/1")
@@ -40,7 +40,7 @@ public class CartoesTest extends BaseTest {
 	}
     
     @Test
-    public void deveRetornar404AoBuscarCartaoInexistente() {
+    void deveRetornar404AoBuscarCartaoInexistente() {
     	given()
     	 .when()
     	     .get("/cartoes/4")
@@ -51,7 +51,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar201AoCadastrarCartaoValido() {
+    void deveRetornar201AoCadastrarCartaoValido() {
         given()
          .body(cartaoValido())
         .when()
@@ -64,7 +64,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBloquearCartao() {
+    void deveRetornar200AoBloquearCartao() {
     	given()
     	 .when()
     	     .put("/cartoes/1/bloquear")
@@ -75,7 +75,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoDesbloquearCartao() {
+    void deveRetornar200AoDesbloquearCartao() {
     	given()
     	  .when()
              .put("/cartoes/2/desbloquear")
@@ -87,7 +87,7 @@ public class CartoesTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar200AoCancelarCartao() {
+    void deveRetornar200AoCancelarCartao() {
     	given()
     	  .when()
     	     .put("/cartoes/1/cancelar")
@@ -98,7 +98,7 @@ public class CartoesTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar409AoBloquearCartaoCancelado() {
+    void deveRetornar409AoBloquearCartaoCancelado() {
     	given()
     	  .when()
     	     .put("/cartoes/3/bloquear")
@@ -109,7 +109,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarCartoesAtivosComQueryParam() {
+    void deveRetornar200AoBuscarCartoesAtivosComQueryParam() {
     	   given()
     	       .queryParam("status", "ATIVO")
     	   .when() 
@@ -122,7 +122,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarCartoesBloqueadosComQueryParam() {
+    void deveRetornar200AoBuscarCartoesBloqueadosComQueryParam() {
     	   given()
     	       .queryParam("status", "BLOQUEADO")
     	   .when()
@@ -134,7 +134,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200AoBuscarCartoesDoClienteComQueryParam() {
+    void deveRetornar200AoBuscarCartoesDoClienteComQueryParam() {
     	    given()
                 .queryParam("cliente_id", 1)
     	    .when()
@@ -146,7 +146,7 @@ public class CartoesTest extends BaseTest {
     }
         
     @Test
-    public void deveRetornar200AoBuscarNumeroCartaoDoClienteComQueryParam() {
+    void deveRetornar200AoBuscarNumeroCartaoDoClienteComQueryParam() {
     	    given()
     	        .queryParam("cliente_id", 2)
     	    .when()
@@ -159,7 +159,7 @@ public class CartoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar404AoBuscarCartoesInexistentesPorClienteComQueryParam() {
+    void deveRetornar404AoBuscarCartoesInexistentesPorClienteComQueryParam() {
     	    given()
     	        .queryParam("cliente_id", 5)
     	    .when()    

@@ -4,12 +4,12 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     protected static final String BASE_URL = "http://localhost:8000";
 
     @BeforeEach
-    public void configurarRestAssured() {
+    protected void configurarRestAssured() {
         RestAssured.baseURI = BASE_URL;
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.requestSpecification = RestAssured

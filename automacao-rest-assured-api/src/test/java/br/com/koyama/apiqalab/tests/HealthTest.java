@@ -8,7 +8,7 @@ import br.com.koyama.apiqalab.base.BaseTest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class HealthTest extends BaseTest {
+class HealthTest extends BaseTest {
 
 	   @Test
 	    void deveRetornarApiDisponivel() {

@@ -7,10 +7,10 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.jupiter.api.Test;
 
-public class AutenticacoesTest extends BaseTest {
+class AutenticacoesTest extends BaseTest {
 
 	@Test
-	public void deveRetornar200AoAcessarApiPublica() {
+	void deveRetornar200AoAcessarApiPublica() {
 		given()
 	    .when()	
 		    .get("/auth/publica")
@@ -22,7 +22,7 @@ public class AutenticacoesTest extends BaseTest {
 	}
 
     @Test
-	public void deveRetornar200ComApiKeyValida() {
+	void deveRetornar200ComApiKeyValida() {
 	    given()
 	        .header("x-api-key", "qa-lab-api-key-123")
 	    .when() 
@@ -36,7 +36,7 @@ public class AutenticacoesTest extends BaseTest {
 	}
     
     @Test
-    public void deveRetornar401APIAusente() {
+    void deveRetornar401APIAusente() {
     	given()
     	.when()
     	    .get("/auth/api-key")
@@ -47,7 +47,7 @@ public class AutenticacoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar401APIKeyInvalida() {
+    void deveRetornar401APIKeyInvalida() {
     	given()
     	    .header("x-api-key", "123456")
     	.when()
@@ -59,7 +59,7 @@ public class AutenticacoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200ComBasicAuthValido() {
+    void deveRetornar200ComBasicAuthValido() {
     	given()
             .auth().preemptive().basic("admin", "123456")
     	.when()
@@ -70,7 +70,7 @@ public class AutenticacoesTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar401ComBasicAuthInvalido() {
+    void deveRetornar401ComBasicAuthInvalido() {
     	given()
     	   .auth().preemptive().basic("admin", "123")
     	.when()
@@ -82,7 +82,7 @@ public class AutenticacoesTest extends BaseTest {
     	;
     }
     @Test
-    public void deveRetornar200ComBearerTokenValido() {
+    void deveRetornar200ComBearerTokenValido() {
     	given()
     	   .auth().oauth2("fake-token-qa-lab-123456")
     	.when() 
@@ -94,7 +94,7 @@ public class AutenticacoesTest extends BaseTest {
     	;
     }
     @Test
-    public void deveRetornar401ComBearerTokenAusente() {
+    void deveRetornar401ComBearerTokenAusente() {
     	given()
     	.when()
     	    .get("/auth/bearer")
@@ -104,7 +104,7 @@ public class AutenticacoesTest extends BaseTest {
     	;
     }
     @Test
-    public void deveRetornar401ComBearerTokenInvalido() {
+    void deveRetornar401ComBearerTokenInvalido() {
     	given()
     	    .auth().oauth2("fake-token-qa-lab")
     	.when() 

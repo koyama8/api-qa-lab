@@ -12,12 +12,12 @@ import java.io.File;
 
 import org.junit.jupiter.api.Test;
 
-public class ArquivosComportamentoTest extends BaseTest {
+class ArquivosComportamentoTest extends BaseTest {
 
     // Arquivos e comportamento avancado
 
  	@Test
-	public void deveRetornar200AoFazerUploadDeArquivo() {
+	void deveRetornar200AoFazerUploadDeArquivo() {
 	    File arquivo = new File("src/test/resources/payloads/upload-estudo.txt");
 
 	    given()
@@ -37,7 +37,7 @@ public class ArquivosComportamentoTest extends BaseTest {
 
 	
     @Test
-    public void deveRetornar200AoFazerDownloadDeArquivo() {
+    void deveRetornar200AoFazerDownloadDeArquivo() {
     	Response response =
     			given()
     			    .accept("text/plain")
@@ -57,7 +57,7 @@ public class ArquivosComportamentoTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar200AoBuscarMetadadosDoArquivo() {
+    void deveRetornar200AoBuscarMetadadosDoArquivo() {
     	given()
     	    .accept("application/json")
     	.when()
@@ -75,7 +75,7 @@ public class ArquivosComportamentoTest extends BaseTest {
     }
     
     @Test
-    public void deveRetornar200DentroDeUmSegundo() {
+    void deveRetornar200DentroDeUmSegundo() {
     	given()
     	    .accept("application/json")
     	    .queryParam("segundos", 1)
@@ -90,7 +90,7 @@ public class ArquivosComportamentoTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar200DentroDoTempoMaximoEsperado() {
+    void deveRetornar200DentroDoTempoMaximoEsperado() {
     	given()
     	    .accept("application/json")
     	    .queryParam("segundos", 1)
@@ -106,7 +106,7 @@ public class ArquivosComportamentoTest extends BaseTest {
     }
   
     @Test
-    public void deveRetornar200DentroDoDelay() {
+    void deveRetornar200DentroDoDelay() {
     	given()
             .accept("application/json")
             .queryParam("segundos", 5)

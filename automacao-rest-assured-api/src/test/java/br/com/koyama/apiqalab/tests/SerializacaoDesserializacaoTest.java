@@ -13,10 +13,10 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-public class SerializacaoDesserializacaoTest extends BaseTest {
+class SerializacaoDesserializacaoTest extends BaseTest {
 
 		@Test
-		public void deveSerializarMapParaJsonComSucesso() {
+		void deveSerializarMapParaJsonComSucesso() {
 		Map<String, Object> body = new HashMap<>();
 	    body.put("origem", "bruno");
 		body.put("ativo", true);
@@ -36,7 +36,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 	}
 
 		@Test
-		public void deveSerializarObjetoJavaParaJsonComSucesso() {
+		void deveSerializarObjetoJavaParaJsonComSucesso() {
 		ClienteResponse body = new ClienteResponse();
 		body.setNome("Cliente Serializacao");
 		body.setEmail("serializacao@email.com");
@@ -56,7 +56,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 	}
 
 		@Test
-		public void deveDesserializarJsonParaObjetoJava() {
+		void deveDesserializarJsonParaObjetoJava() {
 	    ClienteResponse cliente =
 	        given()
 	        .when()
@@ -76,7 +76,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 	}
 	
 	    @Test
-		public void deveSerializarXmlClienteComSucesso() {
+		void deveSerializarXmlClienteComSucesso() {
 		String bodyXML = """
 				<cliente>
                   <nome>Cliente XML</nome>
@@ -98,7 +98,7 @@ public class SerializacaoDesserializacaoTest extends BaseTest {
 	}
 	
 	     @Test
-     public void deveDesserializarXmlCliente() {
+     void deveDesserializarXmlCliente() {
     	    String responseXml = 
     	    		given()
     	    		  .accept("application/xml")

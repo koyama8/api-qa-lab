@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-public class HeadersTest extends BaseTest {
+class HeadersTest extends BaseTest {
 
 	@Test
-	public void deveRetornar200ComHeadersValidos() {
+	void deveRetornar200ComHeadersValidos() {
         given()
             .header("x-canal", "bruno")
             .header("x-api-version", "1")
@@ -27,7 +27,7 @@ public class HeadersTest extends BaseTest {
 	}
 	
 	@Test
-	public void deveRetornar400QuandoVersaoHeaderForInvalida() {
+	void deveRetornar400QuandoVersaoHeaderForInvalida() {
 	    given()
 	        .header("x-canal", "bruno")
 	        .header("x-api-version", "2")

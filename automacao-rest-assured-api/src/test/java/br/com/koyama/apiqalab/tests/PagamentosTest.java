@@ -12,15 +12,15 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class PagamentosTest extends BaseTest {
+class PagamentosTest extends BaseTest {
 
     @BeforeEach
-    public void resetarDados() {
+    void resetarDados() {
         ResetUtils.resetarMassaDeDados();
     }
 
     @Test
-    public void deveRetornar200AoRealizarPagamentoValido() {
+    void deveRetornar200AoRealizarPagamentoValido() {
         given()
             .body(pagamentoValido())
         .when()
@@ -36,7 +36,7 @@ public class PagamentosTest extends BaseTest {
     }
 
     @Test
-    public void deveAlterarStatusDaFaturaParaPagaAposPagamentoValido() {
+    void deveAlterarStatusDaFaturaParaPagaAposPagamentoValido() {
         given()
             .body(pagamentoValido())
         .when()
@@ -55,7 +55,7 @@ public class PagamentosTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar400AoPagarComValorDivergente() {
+    void deveRetornar400AoPagarComValorDivergente() {
         given()
             .body(pagamentoComValorDivergente())
         .when()
@@ -69,7 +69,7 @@ public class PagamentosTest extends BaseTest {
     }
 
     @Test
-    public void deveRetornar409AoPagarFaturaJaPaga() {
+    void deveRetornar409AoPagarFaturaJaPaga() {
         given()
             .body(pagamentoFaturaJaPaga())
         .when()
